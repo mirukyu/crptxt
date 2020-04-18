@@ -272,13 +272,13 @@ public class CharacterMenuManager : MonoBehaviourPunCallbacks
         switch (character)
         {
             case EntityType.Aramusha:
-                return "Models/Persona/Misaki_SchoolUniform_summer";
+                return "Models/Persona/Aramusha";
             case EntityType.Priestress:
-                return "Models/Persona/Misaki_SchoolUniform_Winter";
+                return "Models/Persona/Priestess";
             case EntityType.Mage:
-                return "Models/Persona/Yuko_SchoolUniform_summer";
+                return "Models/Persona/Mage";
             case EntityType.Crusader:
-                return "Models/Persona/Yuko_SchoolUniform_Winter";
+                return "Models/Persona/Crusader";
         }
 
         return "";

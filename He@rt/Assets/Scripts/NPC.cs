@@ -15,7 +15,7 @@ public class NPC : Entity
     private string name;
     private string[] NPCNameList = new string[] { "Wilhelm", "Paul", "Friedrich",
         "Elongated Musket", "Mike Okzlong", "Jessie", "Ben Doover", "Frank", "Maria",
-        "Reinhardt", "Skelly", "Sophia", "Emma", "Wolfie", "Ditto"};
+        "Reinhardt", "Sophia", "Emma", "Wolfie", "Ditto"};
 
     private int amountAttacks;
 

@@ -46,8 +46,6 @@ public class EntityCreation : MonoBehaviour {
     private GameObject NPC3Model;
     private GameObject NPC4Model;
 
-    private EntityType enemyType = EntityType.JackOLantern;
-
     ////////////////////////////////////////
 
     public List<EntityInfoFieldManager> OverviewList;
@@ -93,37 +91,37 @@ public class EntityCreation : MonoBehaviour {
 
         //////////
 
-        enemy1 = NPCCreation(enemyType, 4); // TO BE CHANGED
-        enemy2 = NPCCreation(enemyType, 5);
-        enemy3 = NPCCreation(enemyType, 6);
-        //enemy4 = NPCCreation(enemyType, 7); //
+        enemy1 = NPCCreation(EntityType.JackOLantern, 4); // TO BE CHANGED
+        enemy2 = NPCCreation(EntityType.Skelly, 5);
+        enemy3 = NPCCreation(EntityType.WispBlue, 6);
+        enemy4 = NPCCreation(EntityType.WispRed, 7); //
 
         NPC2Overview.SetActive(false);
         NPC3Overview.SetActive(false);
         NPC4Overview.SetActive(false);
 
         NPC1Overview.GetComponent<EntityInfoFieldManager>().SetNameAndEntity(((NPC)enemy1).Name, enemy1);
-        NPC1Model = Instantiate(Resources.Load<GameObject>("Models/Persona/UTC_Default"), NPC1SpawnPoint.transform.position, NPC1SpawnPoint.transform.rotation);
+        NPC1Model = Instantiate(Resources.Load<GameObject>(GetModel(enemy1.Type)), NPC1SpawnPoint.transform.position, NPC1SpawnPoint.transform.rotation);
 
         if (enemy2 != null)
         {
             NPC2Overview.SetActive(true);
             NPC2Overview.GetComponent<EntityInfoFieldManager>().SetNameAndEntity(((NPC)enemy2).Name, enemy2);
-            NPC2Model = Instantiate(Resources.Load<GameObject>("Models/Persona/UTC_Default"), NPC2SpawnPoint.transform.position, NPC2SpawnPoint.transform.rotation);
+            NPC2Model = Instantiate(Resources.Load<GameObject>(GetModel(enemy2.Type)), NPC2SpawnPoint.transform.position, NPC2SpawnPoint.transform.rotation);
         }
 
         if (enemy3 != null)
         {
             NPC3Overview.SetActive(true);
             NPC3Overview.GetComponent<EntityInfoFieldManager>().SetNameAndEntity(((NPC)enemy3).Name, enemy3);
-            NPC3Model = Instantiate(Resources.Load<GameObject>("Models/Persona/UTC_SchoolUniform_summer"), NPC3SpawnPoint.transform.position, NPC3SpawnPoint.transform.rotation);
+            NPC3Model = Instantiate(Resources.Load<GameObject>(GetModel(enemy3.Type)), NPC3SpawnPoint.transform.position, NPC3SpawnPoint.transform.rotation);
         }
 
         if (enemy4 != null)
         {
             NPC4Overview.SetActive(true);
             NPC4Overview.GetComponent<EntityInfoFieldManager>().SetNameAndEntity(((NPC)enemy4).Name, enemy4);
-            NPC4Model = Instantiate(Resources.Load<GameObject>("Models/Persona/UTC_SchoolUniform_Winter"), NPC4SpawnPoint.transform.position, NPC4SpawnPoint.transform.rotation);
+            NPC4Model = Instantiate(Resources.Load<GameObject>(GetModel(enemy4.Type)), NPC4SpawnPoint.transform.position, NPC4SpawnPoint.transform.rotation);
         }
 
         OverviewList = new List<EntityInfoFieldManager>() {
@@ -136,7 +134,7 @@ public class EntityCreation : MonoBehaviour {
         UpdateAllOverviews();
     }
 
-    public Entity NPCCreation(EntityType type, int entityID) // Creates an NPC
+    public Entity NPCCreation(EntityType type, int entityID) // Creates an NPC 
     {
         Entity tmp = null;
         switch (type)
@@ -144,9 +142,46 @@ public class EntityCreation : MonoBehaviour {
             case EntityType.JackOLantern:
                 tmp = new JackOLantern(entityID);
                 break;
+
+            case EntityType.Skelly:
+                tmp = new Skelly(entityID);
+                break;
+
+            case EntityType.WispBlue:
+                tmp = new WispBlue(entityID);
+                break;
+
+            case EntityType.WispRed:
+                tmp = new WispRed(entityID);
+                break;
+
+            case EntityType.BunBun:
+                tmp = new BunBun(entityID);
+                break;
+
         }
 
         return tmp;
+
+    }
+
+    private string GetModel(EntityType character) // links the entity type to the player model
+    {
+        switch (character)
+        {
+            case EntityType.JackOLantern:
+                return "Models/Anima/JackOLantern";
+            case EntityType.Skelly:
+                return "Models/Anima/Skelly";
+            case EntityType.WispBlue:
+                return "Models/Anima/WipsBlue";
+            case EntityType.WispRed:
+                return "Models/Anima/WipsRed";
+            case EntityType.BunBun:
+                return "Models/Anima/Rabbit"; 
+        }
+
+        return "";
     }
 
     public void UpdateAllOverviews() // Updates all overview fields
