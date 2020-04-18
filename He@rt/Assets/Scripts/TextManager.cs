@@ -136,7 +136,7 @@ public class TextManager : MonoBehaviour
                 break;
             case "Attack":
                 GetComponent<Combat>().ChooseAttack(7);
-                PressButton("Spell");
+                //PressButton("Spell");
                 break;
             case "Spell":
                 AttackButtonField.SetActive(true);
@@ -146,7 +146,7 @@ public class TextManager : MonoBehaviour
                 GetComponent<EntityCreation>().ApplyTargetable(TargetStyle.Default, null);
                 break;
             case "Flee":
-                if (Random.Range(0f,1f) <= 0.8f * GameObject.Find("Game Manager").GetComponent<EntityCreation>().GetTeamHealthLevel())
+                if (Random.Range(0f,1f) <= 0.8f * GameObject.Find("Game Manager Battle").GetComponent<EntityCreation>().GetTeamHealthLevel())
                 { OutputTextMinor("You could successfully flee!"); }
                 else
                 { OutputTextMinor("Failure! Keep fighting you coward!"); }

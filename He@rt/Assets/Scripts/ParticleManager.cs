@@ -22,11 +22,13 @@ public class ParticleManager : MonoBehaviour {
             case "Water Flow":
             case "Blood Stained":
             case "Hollow":
+            case "Spook Up":
                 Targets = GameObject.Find("Game Manager Battle").GetComponent<EntityCreation>().GetNPCs();
                 break;
 
             case "Bestow Life":
             case "Optimization":
+            case "Purgatory":
                 Targets = GameObject.Find("Game Manager Battle").GetComponent<EntityCreation>().GetPlayers();
                 break;
 

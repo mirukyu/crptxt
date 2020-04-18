@@ -50,6 +50,14 @@ public class NPC : Entity
         {
             case EntityType.JackOLantern:
                 return ((JackOLantern)entity).GetAttackName(index);
+            case EntityType.Skelly:
+                return ((Skelly)entity).GetAttackName(index);
+            case EntityType.WispBlue:
+                return ((WispBlue)entity).GetAttackName(index);
+            case EntityType.WispRed:
+                return ((WispRed)entity).GetAttackName(index);
+            case EntityType.BunBun:
+                return ((BunBun)entity).GetAttackName(index);
             default:
                 return "";
         }
@@ -61,6 +69,14 @@ public class NPC : Entity
         {
             case EntityType.JackOLantern:
                 return ((JackOLantern)entity).GetAttackTarget(index);
+            case EntityType.Skelly:
+                return ((Skelly)entity).GetAttackTarget(index);
+            case EntityType.WispBlue:
+                return ((WispBlue)entity).GetAttackTarget(index);
+            case EntityType.WispRed:
+                return ((WispRed)entity).GetAttackTarget(index);
+            case EntityType.BunBun:
+                return ((BunBun)entity).GetAttackTarget(index);
             default:
                 return TargetStyle.Default;
         }
@@ -72,6 +88,18 @@ public class NPC : Entity
         {
             case EntityType.JackOLantern:
                 ((JackOLantern)attacker).UseSpell(index, target);
+                break;
+            case EntityType.Skelly:
+                ((Skelly)attacker).UseSpell(index, target);
+                break;
+            case EntityType.WispBlue:
+                ((WispBlue)attacker).UseSpell(index, target);
+                break;
+            case EntityType.WispRed:
+                ((WispRed)attacker).UseSpell(index, target);
+                break;
+            case EntityType.BunBun:
+                ((BunBun)attacker).UseSpell(index, target);
                 break;
         }
     }

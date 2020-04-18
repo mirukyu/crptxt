@@ -5,7 +5,7 @@ using UnityEngine;
 /* General Structure:
  * 1) Setup: ALL FUCKING VARIABLES, THERE ARE SO MANY KARIM (with getter and setter)
  * 2) Constructor
- * 3) Methods: Spend Mana, Lose Health, Heal, Regenerate Mana, Attack, Receive Damage Buff Debuff, Receive Armor Buff Debuff, Ailment Clearance, Revive, Apply AoE
+ * 3) Methods: Base Attack, Spend Mana, Lose Health, Heal, Regenerate Mana, Attack, Receive Damage Buff Debuff, Receive Armor Buff Debuff, Ailment Clearance, Revive, Apply AoE
  */
 
 public enum EntityType
@@ -175,8 +175,13 @@ public class Entity
     }
 
     #endregion
-    
+
     #region Methods
+    public void BaseAttack(Entity target) // Spends Mana
+    {
+        Attack(target, baseStrength);
+    }
+
     public bool SpendMana(int spentMana) // Spends Mana
     {
         if (mana - spentMana < 0)
@@ -215,7 +220,7 @@ public class Entity
         if (hp > maxHp)
         { hp = maxHp; }
 
-        GameObject.Find("Game Manage Battler").GetComponent<EntityCreation>().CreatePopUpIcon(this, life, "Heal");
+        GameObject.Find("Game Manager Battle").GetComponent<EntityCreation>().CreatePopUpIcon(this, life, "Heal");
     }
 
     public void RegenerateMana(int newMana) // Regenerates Mana
@@ -313,6 +318,11 @@ public class Entity
                     { target.IsStunned = true; }
                 }
                 break;
+            case "Damage Buff2":
+                foreach (Entity target in EnemiesList)
+                { target.ReceiveDamageBuffDebuff(value); }
+                break;
+
             case "Heal":
                 foreach (Entity target in AlliesList)
                 { target.Heal((int)value); }
@@ -320,6 +330,10 @@ public class Entity
             case "Damage Buff":
                 foreach (Entity target in AlliesList)
                 { target.ReceiveDamageBuffDebuff(value); }
+                break;
+            case "Damage2":
+                foreach (Entity target in AlliesList)
+                { Attack(target, (int)value); }
                 break;
         }
     }

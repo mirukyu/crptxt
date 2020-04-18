@@ -82,7 +82,8 @@ public class Combat : MonoBehaviour {                 // SPELLINDEX 7 IS USED FO
         if (i == 7)
         {
             spellIndex = i;
-            GetComponent<EntityCreation>().ApplyTargetable(TargetStyle.BaseAttack, null);
+            //GetComponent<EntityCreation>().ApplyTargetable(TargetStyle.BaseAttack, null);
+            GetComponent<EntityCreation>().ApplyTargetable(TargetStyle.Enemies, null);
             GetComponent<TextManager>().OutputTextMinor(attacker.TypeName + " => Base Attack =>");
         }
         else
@@ -130,9 +131,10 @@ public class Combat : MonoBehaviour {                 // SPELLINDEX 7 IS USED FO
         string attackName = ((NPC)caster).GetAttackNameGeneral(attackIndex, caster);
         TargetStyle attackTarget = ((NPC)caster).GetAttackTargetGeneral(attackIndex, caster);
 
-        Entity target = GetComponent<EntityCreation>().FindTargetForNPC("Random", attackTarget); //
+        Entity target = GetComponent<EntityCreation>().FindTargetForNPC("Random", attackTarget, caster); //
 
         ((NPC)caster).UseSpellGeneral(attackIndex, caster, target);
+
         GetComponent<EntityCreation>().FindEnemyOverviewField(caster).GetComponent<EntityInfoFieldManager>().SetAttackRecap(caster.TypeName + "\n => \n" + attackName + "\n => \n" + target.TypeName);
 
         //////
@@ -148,7 +150,13 @@ public class Combat : MonoBehaviour {                 // SPELLINDEX 7 IS USED FO
     {
         Entity CurrentAttacker = EntityList[attackerID];
         Entity CurrentTarget = EntityList[targetID];
-        ((Player)CurrentAttacker).UseSpellGeneral(attackIndex, CurrentAttacker, CurrentTarget);
+        if (spellIndex == 7)
+        {
+            ((Player)CurrentAttacker).BaseAttack(CurrentTarget);
+            GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("Punch", "Persona");
+        }
+        else
+            ((Player)CurrentAttacker).UseSpellGeneral(attackIndex, CurrentAttacker, CurrentTarget);
     }
 
     [PunRPC]

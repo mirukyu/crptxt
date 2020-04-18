@@ -87,14 +87,16 @@ public class EntityCreation : MonoBehaviour {
             Player4Overview.SetActive(true);
             Player4Overview.GetComponent<EntityInfoFieldManager>().SetNameAndEntity(((Player)player4).Username, player4);
             player4Model = Instantiate(Resources.Load<GameObject>(CharacterMenuManager.GetModel(player4.Type)), Player4SpawnPoint.transform.position, Player4SpawnPoint.transform.rotation);
-        }   
+        }
 
         //////////
 
-        enemy1 = NPCCreation(EntityType.JackOLantern, 4); // TO BE CHANGED
-        enemy2 = NPCCreation(EntityType.Skelly, 5);
-        enemy3 = NPCCreation(EntityType.WispBlue, 6);
-        enemy4 = NPCCreation(EntityType.WispRed, 7); //
+        EntityType[] tmp = { EntityType.JackOLantern, EntityType.Skelly, EntityType.WispBlue, EntityType.WispRed, EntityType.BunBun};
+
+        enemy1 = NPCCreation(tmp[Random.Range(0, tmp.Length)], 4); // TO BE CHANGED
+        enemy2 = NPCCreation(tmp[Random.Range(0, tmp.Length)], 5);
+        enemy3 = NPCCreation(tmp[Random.Range(0, tmp.Length)], 6);
+        enemy4 = NPCCreation(tmp[Random.Range(0, tmp.Length)], 7); //
 
         NPC2Overview.SetActive(false);
         NPC3Overview.SetActive(false);
@@ -294,14 +296,16 @@ public class EntityCreation : MonoBehaviour {
         return (CurrentHealthLevel / MaxHealthLevel);
     }
 
-    public Entity FindTargetForNPC(string TargetPattern, TargetStyle TargetType) // Chooses A Random Valid Target For an NPC based on a Target Pattern
+    public Entity FindTargetForNPC(string TargetPattern, TargetStyle TargetType, Entity caster) // Chooses A Random Valid Target For an NPC based on a Target Pattern
     {
         List<Entity> PossibleTargets = new List<Entity>() { };
 
-        if (TargetType == TargetStyle.Enemies)
+        if (TargetType == TargetStyle.Enemies || TargetType == TargetStyle.AoEEnemies)
         { PossibleTargets = GetPlayers(); }
-        if (TargetType == TargetStyle.Teammates)
+        if (TargetType == TargetStyle.Teammates || TargetType == TargetStyle.AoETeammates)
         { PossibleTargets = GetNPCs(); }
+        if (TargetType == TargetStyle.Self)
+        { return caster; };
 
         if (PossibleTargets.Count == 0)
         { return null; }
@@ -466,10 +470,10 @@ public class EntityCreation : MonoBehaviour {
     {
         Color red = new Color(0.90f, 0.00f, 0.30f, 1f);
 
-        SkinnedMeshRenderer[] BodyParts = ModelToAffect.GetComponentsInChildren<SkinnedMeshRenderer>();
+        MeshRenderer[] BodyParts = ModelToAffect.GetComponentsInChildren<MeshRenderer>();
         List<Color> BodyPartsInitialColour = new List<Color>() { };
 
-        foreach (SkinnedMeshRenderer smr in BodyParts)
+        foreach (MeshRenderer smr in BodyParts)
         {
             BodyPartsInitialColour.Add(smr.material.color);
             smr.material.color = red;

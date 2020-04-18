@@ -16,9 +16,9 @@ public class JackOLantern : NPC                                                 
     #region Setup
     List<string> AttackNames = new List<string>()
     {
-        "Flame of Despair", 
-        "Pumpkin Pump", 
-        "Spook Up"  
+        "Flame of Despair",
+        "Pumpkin Pump",
+        "Spook Up"
     };
 
     List<TargetStyle> AttackTargets = new List<TargetStyle>()
@@ -59,7 +59,7 @@ public class JackOLantern : NPC                                                 
                 break;
 
             case 2:
-                ApplyAoE("Damage Buff", 0.2f); 
+                ApplyAoE("Damage Buff2", 0.2f); 
                 break;
         }
     }
@@ -74,9 +74,9 @@ public class Skelly : NPC                                                       
     #region Setup
     List<string> AttackNames = new List<string>()
     {
-        "Bone Removal", 
-        "Exoskeleton", 
-        "Fasten Your Seatbelt" 
+        "Bone Removal",
+        "Exoskeleton",
+        "Fasten Your Seatbelt"
     };
 
     List<TargetStyle> AttackTargets = new List<TargetStyle>()
@@ -136,8 +136,8 @@ public class WispBlue : NPC                                                     
     List<string> AttackNames = new List<string>()
     {
         "Soul Dismissal",
-        "Purgatory", 
-        "Ghost Gospel" 
+        "Purgatory",
+        "Ghost Gospel"
     };
 
     List<TargetStyle> AttackTargets = new List<TargetStyle>()
@@ -150,7 +150,7 @@ public class WispBlue : NPC                                                     
 
     #region Constructor
     public WispBlue(int entityID)
-            : base(entityID, EntityType.WispBlue, "Wisp Blue", 10, 10, 0.5f, 3)
+            : base(entityID, EntityType.WispBlue, "Blue Wisp", 10, 10, 0.5f, 3)
     { }
     #endregion
 
@@ -175,7 +175,7 @@ public class WispBlue : NPC                                                     
                 break;
 
             case 1:
-                ApplyAoE("Damage", 10); 
+                ApplyAoE("Damage2", 10); 
                 break;
 
             case 2:
@@ -208,7 +208,7 @@ public class WispRed : NPC                                                      
 
     #region Constructor
     public WispRed(int entityID)
-            : base(entityID, EntityType.WispRed, "Wisp Red", 100, 10, 0.1f, 3)
+            : base(entityID, EntityType.WispRed, "Red Wisp", 100, 10, 0.1f, 3)
     { }
     #endregion
 
@@ -249,7 +249,7 @@ public class BunBun : NPC                                                       
     #region Setup
     List<string> AttackNames = new List<string>()
     {
-        "Bunny Charm", 
+        "Bunny Charm",
         "Bestial Instinct",
         "Hop'n Bite"
     };

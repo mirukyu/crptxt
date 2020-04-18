@@ -68,7 +68,7 @@ public class CharacterMenuManager : MonoBehaviourPunCallbacks
             LoadingIcon.SetActive(true);
             TextField.text = "Loading Game ...";
 
-            GetComponent<CharacterSetUp>().SetUp();
+            GameObject.Find("Character Setup").GetComponent<CharacterSetUp>().SetUp();
 
             StartCoroutine(LoadNextScene());
         }
@@ -144,7 +144,7 @@ public class CharacterMenuManager : MonoBehaviourPunCallbacks
                 {
                     //TextField.text = "Please choose your nickname and character. Choose wisely as it can't be changed later."; // Basis
                     //PreviousCharacter.GetComponent<CharacterSelectionManager>().Selecting();
-                    GetComponent<CharacterSetUp>().SetMyID(counter - 1);   
+                    GameObject.Find("Character Setup").GetComponent<CharacterSetUp>().SetMyID(counter - 1);   
 
                     PV.RPC("RPC_ShareSelect", RpcTarget.All, PreviousCharacter.GetComponent<CharacterSelectionManager>().ListID, null, "Confirm");
                     
