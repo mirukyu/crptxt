@@ -10,6 +10,7 @@ public class MainMenuManager : MonoBehaviour {
 
     public GameObject MainPageCanvas;
     public GameObject NetworkCanvas;
+    public GameObject LoreCanvas;
     public GameObject RoomCanvas;
 
     public GameObject NetworkButtons;
@@ -30,6 +31,7 @@ public class MainMenuManager : MonoBehaviour {
     {
         MainPageCanvas.SetActive(true);
         NetworkCanvas.SetActive(false);
+        LoreCanvas.SetActive(false);
         RoomCanvas.SetActive(false);
         StartButton.SetActive(false);
     }
@@ -111,7 +113,10 @@ public class MainMenuManager : MonoBehaviour {
     { TextField.text = "Sorry, the tutorial doesn't exist yet UwU."; }
 
     public void Lore()
-    { TextField.text = "申し訳ございませんでした。その動作のはまだ禁止でございます。"; }
+    {
+        NetworkCanvas.SetActive(false);
+        LoreCanvas.SetActive(true);
+    }
 
     public void Quit()
     { Application.Quit(); }
@@ -150,6 +155,7 @@ public class MainMenuManager : MonoBehaviour {
         { GetComponent<Matchmaking>().Cancel(); }
 
         RoomCanvas.SetActive(false);
+        LoreCanvas.SetActive(false);
         NetworkCanvas.SetActive(true);
         RoomSelectionButtons.SetActive(false);
         NetworkButtons.SetActive(true);
