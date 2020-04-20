@@ -2228,7 +2228,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "Attacks:\n\tSoul Dismissal:\r 5 dmg to one Enemy - Steals 10 Mana - Apllies
-    Exhaust\n\tPurgatory:\r        Deals 10 dmg to all Enemies\n\tGhost Gospel:   20
+    Exhaust\n\tPurgatory:\r         Deals 10 dmg to all Enemies\n\tGhost Gospel:   20
     dmg to one Enemy"
 --- !u!222 &754519966
 CanvasRenderer:
@@ -2523,10 +2523,10 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "Attacks:\n\tYour Code is Trash:\r Damage Debuff of 20% on one Enemy\n\tEffective
-    Malware:\r   Armor Debuff of 40% on one Enemy\n\tOptimization:\r          20%
-    Damage Buff on all Allies\n\tDecipher:\r               35 dmg to one Enemy\n\tHayawan:
-    \              Targeting the Crusader class, Receives a Spell Boost of 150%\n\tAd
-    Blocker:            20% Armor Buff on one Ally"
+    Malware:\r   Armor Debuff of 40% on one Enemy\n\tOptimization:\r           20%
+    Damage Buff on all Allies\n\tDecipher:\r                35 dmg to one Enemy\n\tHayawan:
+    \               Targeting the Crusader class, Receives a Spell Boost of 150%\n\tAd
+    Blocker:             20% Armor Buff on one Ally"
 --- !u!222 &868806938
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2737,7 +2737,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &942381599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3665,7 +3665,7 @@ MonoBehaviour:
   m_Text: 'Description:
 
     I''ll give you one advice before going into the dungeon: Upon encounter of Bun
-    Bun, run. Run as far as you can. This little fellow will rip your oarty apart,
+    Bun, run. Run as far as you can. This little fellow will rip your party apart,
     leaving you bleeding on the flour with all your intestines gouged out.
 
     Don''t judge a book by its cover. You will fall for its cuteness, and soon enough
@@ -4482,10 +4482,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Attacks:\n\tBlack Swan:\r      25 dmg to one Enemy\n\tSwan Feather:   Regenerates
-    50 Mana of one Ally\n\tWhite Breath:\r    Heals one Ally by 15 - Clears all Ailments\n\tBestow
-    Life:      Heals all Allies by 35\n\tRelish in Grace: Revives a fallen Ally\n\tEXPLOSION:
-    \     50 dmg to all Enemies"
+  m_Text: "Attacks:\n\tBlack Swan:\r       25 dmg to one Enemy\n\tSwan Feather:    Regenerates
+    50 Mana of one Ally\n\tWhite Breath:\r     Heals one Ally by 15 - Clears all Ailments\n\tBestow
+    Life:       Heals all Allies by 35\n\tRelish in Grace: Revives a fallen Ally\n\tEXPLOSION:
+    \    50 dmg to all Enemies"
 --- !u!222 &1365445630
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6701,7 +6701,7 @@ MonoBehaviour:
     15%\n \tZenshin School:   20 dmg to one Enemy - receives a 30% Damage Buff\n\tWater
     Flow:         25 dmg to All Enemies\n\tBlood Stained:     15 dmg to one Enemy
     - apllies Bleed to All Enemies\n\tKabe Don:           140% Spell Boost on Priestess
-    OR Increasing Dodge Rate by 15 %\n\tStance:               Activates 40% Riposte"
+    OR Increasing Dodge Rate by 15 %\n\tStance:                Activates 40% Riposte"
 --- !u!222 &1790559364
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7388,7 +7388,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Attacks:\n\tBone Removal:          Rips out the Enemies spine - 10 dmg
+  m_Text: "Attacks:\n\tBone Removal:           Rips out the Enemies spine - 10 dmg
     - Applies Bleed and 10% Cripple\n\tExoskeleton:\r              Enters 20% Riposte
     state - Heals herself by 25\n\tFasten Your Seatbelt: Stuns one Enemy"
 --- !u!222 &1974245514
@@ -7961,7 +7961,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainPageCanvas: {fileID: 89719086}
   NetworkCanvas: {fileID: 1519516600}
-  LoreCanvas: {fileID: 0}
+  LoreCanvas: {fileID: 942381598}
   RoomCanvas: {fileID: 1361767387}
   NetworkButtons: {fileID: 1184038901}
   RoomSelectionButtons: {fileID: 1299776473}
