@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -208,7 +209,6 @@ public class Entity
         hp = 0;
         mana = 0;
         IsKo = true;
-        GameObject.Find("Game Manager Battle").GetComponent<EntityCreation>().DeathOrRevive();
         return "Died";
     }
 
@@ -233,21 +233,19 @@ public class Entity
         GameObject.Find("Game Manager Battle").GetComponent<EntityCreation>().CreatePopUpIcon(this, newMana, "Mana");
     }
 
+    public void Bleed()
+    {
+        LoseHealth(5, null, false, false);
+    }
+
     public void Attack (Entity entity, int damage) // Attacks a certain entity (with crippled) (Either Spell or Base Attack)
     {
         LoseHealth((int) (damage * crippledPercentage), this, false, false);
-        string attackResult = entity.LoseHealth((int) (damage + damage * damageBuffDebuff), this, true, true);
 
-        switch (attackResult)
+        if (PhotonNetwork.IsMasterClient)
         {
-            case "Dodged":
-                GameObject.Find("Game Manager Battle").GetComponent<EntityCreation>().CreatePopUpIcon(entity, 0, "Dodged");
-                break;
-            case "Survived":
-                GameObject.Find("Game Manager Battle").GetComponent<EntityCreation>().FlashUpEffect(entity);
-                break;
-            case "Died":
-                break;
+            float DodgeChance = Random.Range(0.00f, 1f);
+            GameObject.Find("Game Manager Battle").GetComponent<PhotonView>().RPC("RPC_LoseHealth", RpcTarget.All, entityID, entity.EntityID, (int)(damage + damage * damageBuffDebuff), DodgeChance);
         }
     }
 
@@ -314,8 +312,11 @@ public class Entity
             case "Stun":
                 foreach (Entity target in EnemiesList)
                 {
-                    if (Random.Range(0.00f, 1f) <= value)
-                    { target.IsStunned = true; }
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        if (Random.Range(0.00f, 1f) <= value)
+                        { GameObject.Find("Game Manager Battle").GetComponent<PhotonView>().RPC("RPC_Stun", RpcTarget.All, target.EntityID); }
+                    }
                 }
                 break;
             case "Damage Buff2":

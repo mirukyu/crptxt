@@ -29,6 +29,7 @@ public class ParticleManager : MonoBehaviour {
             case "Bestow Life":
             case "Optimization":
             case "Purgatory":
+            case "Inflammation":
                 Targets = GameObject.Find("Game Manager Battle").GetComponent<EntityCreation>().GetPlayers();
                 break;
 

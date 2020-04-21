@@ -29,6 +29,13 @@ public class Matchmaking : MonoBehaviourPunCallbacks {
         PhotonNetwork.CreateRoom("Room " + RandoRoomNum, roomOpts);
     }
 
+    public void CreatSoloRoom()
+    {
+        int RandoRoomNum = Random.Range(0, 10000);
+        RoomOptions roomOpts = new RoomOptions() { IsVisible = false, IsOpen = false, MaxPlayers = (byte)1 };
+        PhotonNetwork.CreateRoom("Solo Room " + RandoRoomNum, roomOpts);
+    }
+
     public void CreateCustomRoom(string RoomName)
     {
         RoomOptions roomOpts = new RoomOptions() { IsVisible = true, IsOpen = true, MaxPlayers = (byte)MultiplayerSetting.multiplyerSetting.maxPlayers };

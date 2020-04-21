@@ -214,7 +214,7 @@ public class RoomController : MonoBehaviourPunCallbacks, IInRoomCallbacks
         GetComponent<MainMenuManager>().IsMaster(false);
         if (PhotonNetwork.IsMasterClient)
         { GetComponent<MainMenuManager>().IsMaster(true); }
-        GetComponent<MainMenuManager>().RoomEnter(PhotonNetwork.CurrentRoom.PlayerCount + " / " + MultiplayerSetting.multiplyerSetting.maxPlayers + " Players", PhotonNetwork.CurrentRoom.Name, PhotonNetwork.PlayerList);
+        GetComponent<MainMenuManager>().RoomEnter(PhotonNetwork.CurrentRoom.PlayerCount + " / " + PhotonNetwork.CurrentRoom.MaxPlayers + " Players", PhotonNetwork.CurrentRoom.Name, PhotonNetwork.PlayerList);
     }
 
     [PunRPC]

@@ -36,10 +36,8 @@ public class NPC : Entity
             : base(entityID, type, typeName, hp, 100, baseStrength, dodgeRate)
     {
         name = NPCNameList[Random.Range(0, (NPCNameList.Length) - 1)];
-        
-        this.amountAttacks = amountAttacks;
 
-        
+        this.amountAttacks = amountAttacks;
     }
     #endregion
 

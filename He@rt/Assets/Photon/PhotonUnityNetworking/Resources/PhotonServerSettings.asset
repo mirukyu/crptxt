@@ -45,5 +45,15 @@ MonoBehaviour:
   - RPC_Test
   - RPC_ExecuteAttack
   - RPC_SetAttackRecap
+  - RPC_AddAttack2AttackList
+  - RPC_RemoveAttackRecap
+  - RPC_Reset
+  - RPC_SetAttackRecapSpecial
+  - RPC_VerfiyState
+  - RPC_UpdateNames
+  - RPC_LoseHealth
+  - RPC_Stun
+  - RPC_OverviewUpdate
+  - RPC_SetEnemyTypes
   DisableAutoOpenWizard: 1
   ShowSettings: 1

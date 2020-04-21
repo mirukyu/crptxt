@@ -200,7 +200,7 @@ public class WispRed : NPC                                                      
 
     List<TargetStyle> AttackTargets = new List<TargetStyle>()
     {
-        TargetStyle.Enemies,
+        TargetStyle.AoEEnemies,
         TargetStyle.Teammates,
         TargetStyle.Enemies
     };
@@ -227,7 +227,7 @@ public class WispRed : NPC                                                      
         switch (index)
         {
             case 0:
-                ApplyAoE("Damage", 15); 
+                ApplyAoE("Damage2", 15); 
                 break;
 
             case 1:

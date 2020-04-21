@@ -18,6 +18,9 @@ public class Combat : MonoBehaviour {                 // SPELLINDEX 7 IS USED FO
 
     private PhotonView PV;
 
+    // Here we will save all the attacks, wanted to be executed by players, the structure is the following: [attackerID, targetID, attackIndex]
+    private List<List<int>> AttackList = new List<List<int>>();
+
     public void Start()
     {
         myID = CharacterSetUp.Game.myID;
@@ -30,51 +33,37 @@ public class Combat : MonoBehaviour {                 // SPELLINDEX 7 IS USED FO
         attacker = EntityList[myID];
 
         GetComponent<TextManager>().FillInAttackFields(attacker);
-        GetComponent<TextManager>().OutputTextMinor(attacker.TypeName + " =>");
+        GetComponent<TextManager>().BackToActionSelect();
 
         PV = GetComponent<PhotonView>();
+
+        StartCoroutine(PlayAudio());
     }
 
-    // Update is called once per frame
-    void Update ()
+    public IEnumerator PlayAudio()
     {
-        //if (attacker != null && target != null && spellIndex != -1) // Executing an Attack (all other side actions needed)
-        if (target != null && spellIndex != -1)
-        {
-            PV.RPC("RPC_ExecuteAttack", RpcTarget.All, attacker.EntityID, target.EntityID, spellIndex);
-            /*
-            GetComponent<EntityCreation>().RemoveAllAttackRecaps();
+        yield return new WaitForSeconds(0.1f);
+        GetComponent<AudioManager>().PlayTheme(ThemeStyle.Battle);
+    }
 
-            if (spellIndex == 7)
-            {
-                attacker.Attack(target, attacker.BaseStrength);
-                GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("Punch", "Persona");
-                CurrentOverviewField.GetComponent<EntityInfoFieldManager>().SetAttackRecap(attacker.TypeName + "\n => \n" + "Base Attack" + "\n => \n" + target.TypeName);
-            }
-            else
-            {
-                //ExecuteAttack();
-                PV.RPC("RPC_ExecuteAttack", RpcTarget.All, attacker.EntityID, target.EntityID, spellIndex);
-                CurrentOverviewField.GetComponent<EntityInfoFieldManager>().SetAttackRecap(attacker.TypeName + "\n => \n" + ((Player)attacker).GetAttackNameGeneral(spellIndex, attacker) + "\n => \n" + target.TypeName);
-                
-            }
-            */
-            GetComponent<EntityCreation>().UpdateAllOverviews();
-
-            StartCoroutine(EnemyCounterAttack());
-
-            
-            Reset();
-        }
-	}
+    ///////////////////////////////
 
     public void TargetButton(GameObject overviewField) // Takes input of the pressed Entity and takes appropriate measure
     {
         target = overviewField.GetComponent<EntityInfoFieldManager>().myEntity;
 
         GetComponent<TextManager>().SetBarrier();
+
+
+        if (spellIndex == 7)
+            GetComponent<TextManager>().OutputTextMinor(attacker.TypeName + " => " + "Base Attack" + " => " + target.TypeName);
+        else
+            GetComponent<TextManager>().OutputTextMinor(attacker.TypeName + " => " + ((Player)attacker).GetAttackNameGeneral(spellIndex, attacker) + " => " + target.TypeName);
+
         PV.RPC("RPC_SetAttackRecap", RpcTarget.All, attacker.EntityID, target.EntityID, spellIndex);
-        // Add attack to list ////////////////////////////////////////////////////////////////////////////////////
+        GetComponent<EntityCreation>().ApplyTargetable(TargetStyle.Default, null);
+
+        PV.RPC("RPC_AddAttack2AttackList", RpcTarget.MasterClient, attacker.EntityID, target.EntityID, spellIndex);
     }
 
     public void ChooseAttack(int i) // Takes input of the Attack Button
@@ -82,12 +71,18 @@ public class Combat : MonoBehaviour {                 // SPELLINDEX 7 IS USED FO
         if (i == 7)
         {
             spellIndex = i;
-            //GetComponent<EntityCreation>().ApplyTargetable(TargetStyle.BaseAttack, null);
             GetComponent<EntityCreation>().ApplyTargetable(TargetStyle.Enemies, null);
             GetComponent<TextManager>().OutputTextMinor(attacker.TypeName + " => Base Attack =>");
         }
         else
         {
+            if (attacker.IsExhausted)
+            {
+                GetComponent<EntityCreation>().ApplyTargetable(TargetStyle.Default, null);
+                GetComponent<TextManager>().OutputTextMinor(" !!! You are exhausted! You can only do Basic Attacks !!!");
+                return;
+            }
+
             if (((Player)attacker).GetManaRequirementGeneral(i, attacker) <= attacker.Mana)
             {
                 spellIndex = i;
@@ -105,58 +100,142 @@ public class Combat : MonoBehaviour {                 // SPELLINDEX 7 IS USED FO
         }
     }
 
-    public void ExecuteAttack() // Actual Execution of tha Attack
+    private IEnumerator FullAttackExecution()
     {
-        ((Player)attacker).UseSpellGeneral(spellIndex, attacker, target);
+        yield return new WaitForSeconds(1f);
+
+        PV.RPC("RPC_RemoveAttackRecap", RpcTarget.All);
+
+        FillAttackListWithEnemies();
+
+        List<int> Used = new List<int>();
+
+        while (Used.Count != AttackList.Count)
+        {
+            int index = Random.Range(0, AttackList.Count);
+
+            while (Used.Contains(index))
+                index = Random.Range(0, AttackList.Count);
+
+            Used.Add(index);
+
+            PV.RPC("RPC_ExecuteAttack", RpcTarget.All, AttackList[index][0], AttackList[index][1], AttackList[index][2], true, true);
+
+            yield return new WaitForSeconds(GameObject.Find("SFX Manager").GetComponent<SFXManager>().GetClipLength() + 0.5f);
+        }
+
+        AttackList = new List<List<int>>();
+        PV.RPC("RPC_Reset", RpcTarget.All);
+        PV.RPC("RPC_RemoveAttackRecap", RpcTarget.All);
+
+        if (GetComponent<EntityCreation>().GetPlayers().Count == 0)
+        {
+            GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("Lose", "");
+            Debug.Log("Anima won! Return to Traversal!");
+        }
+        if (GetComponent<EntityCreation>().GetNPCs().Count == 0)
+        {
+            GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("Win", "");
+            Debug.Log("Persona won! Return to Traversal!");
+        }
+
+        PV.RPC("RPC_VerfiyState", RpcTarget.All);
+    }
+
+    private void FillAttackListWithEnemies()
+    {
+        List<Entity> PossibleEnemies = GetComponent<EntityCreation>().GetNPCs();
+
+        foreach (Entity caster in PossibleEnemies)
+        {
+            int attackIndex = Random.Range(0, ((NPC)caster).AmountAttacks);
+            TargetStyle attackTarget = ((NPC)caster).GetAttackTargetGeneral(attackIndex, caster);
+            Entity target = GetComponent<EntityCreation>().FindTarget("Random", attackTarget, caster);
+
+            AttackList.Add(new List<int> { caster.EntityID, target.EntityID, attackIndex });
+        }
     }
 
     public void Reset()
     {
-        GetComponent<EntityCreation>().ApplyTargetable(TargetStyle.Default, null);
-
-        //attacker = null;
         target = null;
         spellIndex = -1;
     }
 
-    public IEnumerator EnemyCounterAttack() // Enemy Attacking After Player's Turn
-    {
-        yield return new WaitForSeconds(GameObject.Find("SFX Manager").GetComponent<SFXManager>().GetClipLength() + 0.5f);
-
-        List<Entity> PossibleEnemies = new List<Entity>() { };
-        PossibleEnemies = GetComponent<EntityCreation>().GetNPCs();
-        Entity caster = PossibleEnemies[Random.Range(0, PossibleEnemies.Count)]; // We get one random enemy
-
-        int attackIndex = Random.Range(0, ((NPC)caster).AmountAttacks); // Getting all necessary information
-        string attackName = ((NPC)caster).GetAttackNameGeneral(attackIndex, caster);
-        TargetStyle attackTarget = ((NPC)caster).GetAttackTargetGeneral(attackIndex, caster);
-
-        Entity target = GetComponent<EntityCreation>().FindTargetForNPC("Random", attackTarget, caster); //
-
-        ((NPC)caster).UseSpellGeneral(attackIndex, caster, target);
-
-        GetComponent<EntityCreation>().FindEnemyOverviewField(caster).GetComponent<EntityInfoFieldManager>().SetAttackRecap(caster.TypeName + "\n => \n" + attackName + "\n => \n" + target.TypeName);
-
-        //////
-
-        GetComponent<EntityCreation>().UpdateAllOverviews(); // THIS IS NECESSARY FOR RESET / WILL BE CAST AFTER CONCLUSION OF BOTH SIDE'S ATTACKS
-        GetComponent<TextManager>().BackToActionSelect();
-    }
-
-    ///////////// RPC Calls
+    ///////////////////////////////////////////////////// RPC Calls
 
     [PunRPC]
-    private void RPC_ExecuteAttack(int attackerID, int targetID, int attackIndex)
+    private void RPC_ExecuteAttack(int attackerID, int targetID, int attackIndex, bool ApplyConfuse, bool ApplyBlind)
     {
         Entity CurrentAttacker = EntityList[attackerID];
         Entity CurrentTarget = EntityList[targetID];
-        if (spellIndex == 7)
+
+        // Chacking all Ailments
+        if (CurrentAttacker.IsKo) // Died in Combat
+        {
+            PV.RPC("RPC_SetAttackRecapSpecial", RpcTarget.All, attackerID, "Died");
+            return;
+        }
+
+        if (CurrentAttacker.IsStunned) // Stun
+        {
+            PV.RPC("RPC_SetAttackRecapSpecial", RpcTarget.All, attackerID, "Stunned");
+            CurrentAttacker.IsStunned = false;
+            return;
+        }
+
+        if (CurrentAttacker.IsExhausted) // Exhaustion
+            CurrentAttacker.IsExhausted = false;
+
+        if (CurrentAttacker.IsBleeding) // Bleed
+            CurrentAttacker.Bleed();
+
+        if (CurrentAttacker.IsConfused && ApplyConfuse) // Confusion
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                if (attackerID <= 3)
+                    attackIndex = Random.Range(0, ((Player)CurrentAttacker).AmountAttacks);
+                else
+                    attackIndex = Random.Range(0, ((NPC)CurrentAttacker).AmountAttacks);
+                PV.RPC("RPC_ExecuteAttack", RpcTarget.All, attackerID, targetID, attackIndex, false, ApplyBlind);
+            }
+            return;
+        }
+
+        if (CurrentAttacker.IsBlinded && ApplyBlind) // Blind
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                TargetStyle attackTarget = TargetStyle.Default;
+                if (attackerID <= 3)
+                    attackTarget = ((Player)CurrentAttacker).GetAttackTargetGeneral(attackIndex, CurrentAttacker);
+                else
+                    attackTarget = ((NPC)CurrentAttacker).GetAttackTargetGeneral(attackIndex, CurrentAttacker);
+
+                CurrentTarget = GetComponent<EntityCreation>().FindTarget("Random", attackTarget, CurrentAttacker);
+
+                PV.RPC("RPC_ExecuteAttack", RpcTarget.All, attackerID, CurrentTarget.EntityID, attackIndex, ApplyConfuse, false);
+            }
+            return;
+        }
+
+        // Actual Execution of the Attack
+        if (attackIndex == 7)
         {
             ((Player)CurrentAttacker).BaseAttack(CurrentTarget);
             GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("Punch", "Persona");
         }
         else
-            ((Player)CurrentAttacker).UseSpellGeneral(attackIndex, CurrentAttacker, CurrentTarget);
+        {
+            if (attackerID <= 3)
+                ((Player)CurrentAttacker).UseSpellGeneral(attackIndex, CurrentAttacker, CurrentTarget);
+            else
+                ((NPC)CurrentAttacker).UseSpellGeneral(attackIndex, CurrentAttacker, CurrentTarget);
+        }
+
+        PV.RPC("RPC_OverviewUpdate", RpcTarget.All);
+        PV.RPC("RPC_SetAttackRecap", RpcTarget.All, attackerID, targetID, attackIndex);
     }
 
     [PunRPC]
@@ -169,6 +248,72 @@ public class Combat : MonoBehaviour {                 // SPELLINDEX 7 IS USED FO
         if (attackIndex == 7)
             CurrentOverviewField.SetAttackRecap(CurrentAttacker.TypeName + "\n => \n" + "Base Attack" + "\n => \n" + CurrentTarget.TypeName);
         else
-            CurrentOverviewField.SetAttackRecap(CurrentAttacker.TypeName + "\n => \n" + ((Player)CurrentAttacker).GetAttackNameGeneral(attackIndex, CurrentAttacker) + "\n => \n" + CurrentTarget.TypeName);
+        {
+            if (attackerID <= 3)
+                CurrentOverviewField.SetAttackRecap(CurrentAttacker.TypeName + "\n => \n" + ((Player)CurrentAttacker).GetAttackNameGeneral(attackIndex, CurrentAttacker) + "\n => \n" + CurrentTarget.TypeName);
+            else
+                CurrentOverviewField.SetAttackRecap(CurrentAttacker.TypeName + "\n => \n" + ((NPC)CurrentAttacker).GetAttackNameGeneral(attackIndex, CurrentAttacker) + "\n => \n" + CurrentTarget.TypeName);
+        }     
+    }
+
+    [PunRPC]
+    private void RPC_SetAttackRecapSpecial(int attackerID, string text)
+    {
+        Entity CurrentAttacker = EntityList[attackerID];
+        EntityInfoFieldManager CurrentOverviewField = OverviewFieldList[attackerID];
+
+        CurrentOverviewField.SetAttackRecap(text + " !");
+    }
+
+    [PunRPC]
+    private void RPC_RemoveAttackRecap()
+    {
+        foreach (EntityInfoFieldManager CurrentOverviewField in OverviewFieldList)
+            CurrentOverviewField.RemoveAttackRecap();
+    }
+
+    [PunRPC]
+    private void RPC_AddAttack2AttackList(int attackerID, int targetID, int attackIndex)
+    {
+        AttackList.Add(new List<int> { attackerID, targetID, attackIndex});
+
+        if (AttackList.Count == RoomController.room.playersInRoom)
+            StartCoroutine(FullAttackExecution());
+    }
+
+    [PunRPC]
+    private void RPC_OverviewUpdate()
+    { GetComponent<EntityCreation>().UpdateAllOverviews(); }
+
+    [PunRPC]
+    private void RPC_Reset()
+    {
+        target = null;
+        spellIndex = -1;
+
+        GetComponent<EntityCreation>().ApplyTargetable(TargetStyle.Default, null);
+
+        GetComponent<EntityCreation>().UpdateAllOverviews();
+        GetComponent<TextManager>().BackToActionSelect();
+    }
+
+    [PunRPC]
+    private void RPC_VerfiyState()
+    {
+        // This function simply checks whether the players have only one action to do (aka are stunned or dead)
+
+        if (attacker.IsKo) // Is Dead
+        {
+            GetComponent<TextManager>().SetBarrier();
+            PV.RPC("RPC_SetAttackRecapSpecial", RpcTarget.All, attacker.EntityID, "Died");
+            PV.RPC("RPC_AddAttack2AttackList", RpcTarget.MasterClient, attacker.EntityID, 0, 0);
+        }
+
+        if (attacker.IsStunned) // Stun
+        {
+            GetComponent<TextManager>().SetBarrier();
+            PV.RPC("RPC_SetAttackRecapSpecial", RpcTarget.All, attacker.EntityID, "Stunned");
+            PV.RPC("RPC_AddAttack2AttackList", RpcTarget.MasterClient, attacker.EntityID, 0, 0);
+        }
     }
 }

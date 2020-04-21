@@ -97,7 +97,7 @@ public class MainMenuManager : MonoBehaviour {
 
     public void PlaySolo() // Netwrok Canvas - Network Buttons
     {
-        GetComponent<Matchmaking>().CreateRandomRoom();
+        GetComponent<Matchmaking>().CreatSoloRoom();
         //GetComponent<RoomController>().SoloGame = true;
     }
 

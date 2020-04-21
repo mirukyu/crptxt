@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,13 @@ public class CharacterSetUp : MonoBehaviour {
     public static Entity Player3;
     public static Entity Player4;
 
+    public static EntityType Enemy1Type; /// All having this (///) will have to be moved into the Traversal Scene, where we will create the enemies just before entering the combat
+    public static EntityType Enemy2Type; ///
+    public static EntityType Enemy3Type; ///
+    public static EntityType Enemy4Type; ///
+
+    EntityType[] PossibleEnemyTypes = { EntityType.JackOLantern, EntityType.Skelly, EntityType.WispBlue, EntityType.WispRed }; ///
+
     public int myID;
 
     private void Awake()
@@ -22,8 +30,16 @@ public class CharacterSetUp : MonoBehaviour {
             if (CharacterSetUp.Game != this)
             { Destroy(this.gameObject); }
         }
-        DontDestroyOnLoad(this.gameObject); //
+        DontDestroyOnLoad(this.gameObject);
     }
+
+    public void Start() ///
+    { ///
+        if (PhotonNetwork.IsMasterClient) ///
+        { ///
+            GetComponent<PhotonView>().RPC("RPC_SetEnemyTypes", RpcTarget.All, Random.Range(0, PossibleEnemyTypes.Length), Random.Range(0, PossibleEnemyTypes.Length), Random.Range(0, PossibleEnemyTypes.Length), Random.Range(0, PossibleEnemyTypes.Length)); ///
+        } ///
+    } ///
 
     public void SetUp()
     {
@@ -62,4 +78,13 @@ public class CharacterSetUp : MonoBehaviour {
 
         return tmp;
     }
+
+    [PunRPC] ///
+    private void RPC_SetEnemyTypes(int type1, int type2, int type3, int type4) ///
+    { ///
+        Enemy1Type = PossibleEnemyTypes[type1]; ///
+        Enemy2Type = PossibleEnemyTypes[type2]; ///
+        Enemy3Type = PossibleEnemyTypes[type3]; ///
+        Enemy4Type = PossibleEnemyTypes[type4]; ///
+    } ///
 }

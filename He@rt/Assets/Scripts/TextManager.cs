@@ -141,59 +141,19 @@ public class TextManager : MonoBehaviour
             case "Spell":
                 AttackButtonField.SetActive(true);
                 ActionsButtonField.SetActive(false);
-                //FillInAttackFields(null);
-                //OutputTextMinor("Please choose an Attacker");
+                OutputTextMinor(GetComponent<EntityCreation>().EntityList[CharacterSetUp.Game.myID].TypeName + " =>");
                 GetComponent<EntityCreation>().ApplyTargetable(TargetStyle.Default, null);
                 break;
             case "Flee":
-                if (Random.Range(0f,1f) <= 0.8f * GameObject.Find("Game Manager Battle").GetComponent<EntityCreation>().GetTeamHealthLevel())
+                if (Random.Range(0f, 1f) <= 0.8f * GameObject.Find("Game Manager Battle").GetComponent<EntityCreation>().GetTeamHealthLevel())
                 { OutputTextMinor("You could successfully flee!"); }
                 else
                 { OutputTextMinor("Failure! Keep fighting you coward!"); }
                 break;
-
-
-
-            case "Play Battle Theme":
-                GetComponent<AudioManager>().PlayTheme(ThemeStyle.Battle);  // TO BE DELETED
+            case "Play Random":
+                GetComponent<AudioManager>().PlayRandom();
                 break;
-            case "Play Boss Theme":
-                GetComponent<AudioManager>().PlayTheme(ThemeStyle.Boss);
-                break;
-            case "Play Ambient Theme":
-                GetComponent<AudioManager>().PlayTheme(ThemeStyle.Ambient);
-                break;
-            case "Play Event Mystic Theme":
-                GetComponent<AudioManager>().PlayTheme(ThemeStyle.EventMystic);
-                break;
-            case "Play Traversal Castle Theme":
-                GetComponent<AudioManager>().PlayTheme(ThemeStyle.TraversalCastle);
-                break;
-            case "Play Traversal Town Theme":
-                GetComponent<AudioManager>().PlayTheme(ThemeStyle.TraversalTown);
-                break;
-            case "Play Traversal Cave Theme":
-                GetComponent<AudioManager>().PlayTheme(ThemeStyle.TraversalCave);
-                break;
-            case "Play Traversal Field Theme":
-                GetComponent<AudioManager>().PlayTheme(ThemeStyle.TraversalFields);
-                break;
-            case "Play Suspense Theme":
-                GetComponent<AudioManager>().PlayTheme(ThemeStyle.Suspense);
-                break;
-            case "Play Unique Theme":
-                GetComponent<AudioManager>().PlayTheme(ThemeStyle.Unique);
-                break;
-            case "Play End Theme":
-                GetComponent<AudioManager>().PlayTheme(ThemeStyle.End);
-                break;
-            case "Play Minigame Theme":
-                GetComponent<AudioManager>().PlayTheme(ThemeStyle.Minigame);
-                break;
-            case "Play Lose SFX":        
-                GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("Lose", "");
-                break;
-        } /// UNTIL HERE
+        }
     }
 
     public void BackToActionSelect() // Back to Action select after carrying out an action

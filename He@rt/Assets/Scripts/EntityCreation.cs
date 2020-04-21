@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EntityCreation : MonoBehaviour {
+public class EntityCreation : MonoBehaviour
+{
 
     [SerializeField] private GameObject Player1Overview;
     [SerializeField] private GameObject Player2Overview;
@@ -24,7 +26,9 @@ public class EntityCreation : MonoBehaviour {
     private GameObject player3Model;
     private GameObject player4Model;
 
-//////////////////////////////////////////////
+    //////////////////////////////////////////////
+
+    private bool BossBattle = false; // This boolean switches between Boss Fight and Normal Fight
 
     [SerializeField] private GameObject NPC1Overview;
     [SerializeField] private GameObject NPC2Overview;
@@ -35,6 +39,8 @@ public class EntityCreation : MonoBehaviour {
     [SerializeField] private GameObject NPC2SpawnPoint;
     [SerializeField] private GameObject NPC3SpawnPoint;
     [SerializeField] private GameObject NPC4SpawnPoint;
+
+    [SerializeField] private GameObject BossSpawnPoint;
 
     public Entity enemy1;
     public Entity enemy2;
@@ -52,14 +58,8 @@ public class EntityCreation : MonoBehaviour {
     public List<Entity> EntityList;
 
     // Use this for initialization
-    void Start () {
-        if (player1 == null) // TO BE DELETED ;; PURPOSE: FILLING IN DEFAULT VALUES WHEN STARTING SCENE FROM BATTLE ARENA INSTEAD OF MAIN MENU
-        {
-            player1 = CharacterSetUp.CharacterCreation(EntityType.Aramusha, "やひこ", 0);
-            player2 = CharacterSetUp.CharacterCreation(EntityType.Priestress, "지영", 1);
-            player3 = CharacterSetUp.CharacterCreation(EntityType.Mage, "Mottan", 2);
-            player4 = CharacterSetUp.CharacterCreation(EntityType.Crusader, "Karim-chan", 3);
-        }                                                // UNTIL HERE
+    void Start()
+    {
 
         Player2Overview.SetActive(false);
         Player3Overview.SetActive(false);
@@ -91,12 +91,33 @@ public class EntityCreation : MonoBehaviour {
 
         //////////
 
-        EntityType[] tmp = { EntityType.JackOLantern, EntityType.Skelly, EntityType.WispBlue, EntityType.WispRed, EntityType.BunBun};
+        BossSpawnPoint.SetActive(false);
 
-        enemy1 = NPCCreation(tmp[Random.Range(0, tmp.Length)], 4); // TO BE CHANGED
-        enemy2 = NPCCreation(tmp[Random.Range(0, tmp.Length)], 5);
-        enemy3 = NPCCreation(tmp[Random.Range(0, tmp.Length)], 6);
-        enemy4 = NPCCreation(tmp[Random.Range(0, tmp.Length)], 7); //
+        if (BossBattle)
+        {
+            NPC1SpawnPoint.SetActive(false);
+            NPC2SpawnPoint.SetActive(false);
+            NPC3SpawnPoint.SetActive(false);
+            NPC4SpawnPoint.SetActive(false);
+            BossSpawnPoint.SetActive(true);
+
+            enemy1 = NPCCreation(EntityType.BunBun, 4);
+            NPC1SpawnPoint = BossSpawnPoint;
+        }
+        else
+        {
+            /*
+            enemy1 = NPCCreation(EntityType.JackOLantern, 4);
+            enemy2 = NPCCreation(EntityType.Skelly, 5);
+            enemy3 = NPCCreation(EntityType.WispBlue, 6);
+            enemy4 = NPCCreation(EntityType.WispRed, 7);
+            */
+
+            enemy1 = NPCCreation(CharacterSetUp.Enemy1Type, 4);
+            enemy2 = NPCCreation(CharacterSetUp.Enemy2Type, 5);
+            enemy3 = NPCCreation(CharacterSetUp.Enemy3Type, 6);
+            enemy4 = NPCCreation(CharacterSetUp.Enemy4Type, 7);
+        }
 
         NPC2Overview.SetActive(false);
         NPC3Overview.SetActive(false);
@@ -125,6 +146,9 @@ public class EntityCreation : MonoBehaviour {
             NPC4Overview.GetComponent<EntityInfoFieldManager>().SetNameAndEntity(((NPC)enemy4).Name, enemy4);
             NPC4Model = Instantiate(Resources.Load<GameObject>(GetModel(enemy4.Type)), NPC4SpawnPoint.transform.position, NPC4SpawnPoint.transform.rotation);
         }
+
+        if (PhotonNetwork.IsMasterClient)
+            GetComponent<PhotonView>().RPC("RPC_UpdateNames", RpcTarget.Others, ((NPC)enemy1).Name, enemy2 == null ? "" : ((NPC)enemy2).Name, enemy3 == null ? "" : ((NPC)enemy3).Name, enemy4 == null ? "" : ((NPC)enemy4).Name);
 
         OverviewList = new List<EntityInfoFieldManager>() {
             Player1Overview.GetComponent<EntityInfoFieldManager>(), Player2Overview.GetComponent<EntityInfoFieldManager>(),
@@ -180,7 +204,7 @@ public class EntityCreation : MonoBehaviour {
             case EntityType.WispRed:
                 return "Models/Anima/WipsRed";
             case EntityType.BunBun:
-                return "Models/Anima/Rabbit"; 
+                return "Models/Anima/Rabbit";
         }
 
         return "";
@@ -296,7 +320,7 @@ public class EntityCreation : MonoBehaviour {
         return (CurrentHealthLevel / MaxHealthLevel);
     }
 
-    public Entity FindTargetForNPC(string TargetPattern, TargetStyle TargetType, Entity caster) // Chooses A Random Valid Target For an NPC based on a Target Pattern
+    public Entity FindTarget(string TargetPattern, TargetStyle TargetType, Entity caster) // Chooses A Random Valid Target For an NPC based on a Target Pattern
     {
         List<Entity> PossibleTargets = new List<Entity>() { };
 
@@ -445,23 +469,25 @@ public class EntityCreation : MonoBehaviour {
     {
         GameObject ModelToAffect = null;
 
-        if (player1 != null && player1 == target)
+        if (player1 == target)
         { ModelToAffect = player1Model; }
-        if (player2 != null && player2 == target)
+        if (player2 == target)
         { ModelToAffect = player2Model; }
-        if (player3 != null && player3 == target)
+        if (player3 == target)
         { ModelToAffect = player3Model; }
-        if (player4 != null && player4 == target)
+        if (player4 == target)
         { ModelToAffect = player4Model; }
 
-        if (enemy1 != null && enemy1 == target)
+        if (enemy1 == target)
         { ModelToAffect = NPC1Model; }
-        if (enemy2 != null && enemy2 == target)
+        if (enemy2 == target)
         { ModelToAffect = NPC2Model; }
-        if (enemy3 != null && enemy3 == target)
+        if (enemy3 == target)
         { ModelToAffect = NPC3Model; }
-        if (enemy4 != null && enemy4 == target)
+        if (enemy4 == target)
         { ModelToAffect = NPC4Model; }
+
+        Debug.Log(target.Type);
 
         StartCoroutine(FlashUpColour(ModelToAffect));
     }
@@ -491,7 +517,7 @@ public class EntityCreation : MonoBehaviour {
     {
         Color ColourToUse = new Color(0f, 0f, 0f, 0f);
 
-        switch(Type)
+        switch (Type)
         {
             case "Damage":
                 ColourToUse = new Color(0.90f, 0.00f, 0.30f, 1f); //red
@@ -507,8 +533,77 @@ public class EntityCreation : MonoBehaviour {
                 break;
         }
 
-        Object tmp = Instantiate(Resources.Load("Pop Up Icon"), FindTargetPosition(entity).transform.position + new Vector3 (0, 1.5f, 0), Quaternion.identity);
+        Object tmp = Instantiate(Resources.Load("Pop Up Icon"), FindTargetPosition(entity).transform.position + new Vector3(0, 1.5f, 0), Quaternion.identity);
 
         ((GameObject)tmp).GetComponent<PopUpIconManager>().SetTextAndColor(value, ColourToUse);
+    }
+
+    /////////////////////////////////////////////////////////////// RPC
+
+    [PunRPC]
+    private void RPC_UpdateNames(string name1, string name2, string name3, string name4)
+    {
+        ((NPC)enemy1).Name = name1;
+        NPC1Overview.GetComponent<EntityInfoFieldManager>().SetNameAndEntity(((NPC)enemy1).Name, enemy1);
+
+        if (name2 != "")
+        {
+            ((NPC)enemy2).Name = name2;
+            NPC2Overview.GetComponent<EntityInfoFieldManager>().SetNameAndEntity(((NPC)enemy2).Name, enemy2);
+        }
+
+        if (name3 != "")
+        {
+            ((NPC)enemy3).Name = name3;
+            NPC3Overview.GetComponent<EntityInfoFieldManager>().SetNameAndEntity(((NPC)enemy3).Name, enemy3);
+        }
+
+        if (name4 != "")
+        {
+            ((NPC)enemy4).Name = name4;
+            NPC4Overview.GetComponent<EntityInfoFieldManager>().SetNameAndEntity(((NPC)enemy4).Name, enemy4);
+        }
+    }
+
+    [PunRPC]
+    public void RPC_LoseHealth(int attackerID, int targetID, int damage, float DodgeChance)
+    // Loses Health BUT for RPC Callse (only called once in the usage of Attack (since that is the only case where a dodge can happen -> thus being the sole factor with desynchronization))
+    {
+        List<Entity> EntityList = GameObject.Find("Game Manager Battle").GetComponent<EntityCreation>().EntityList;
+
+        Entity CurrentAttacker = EntityList[attackerID];
+        Entity CurrentTarget = EntityList[targetID];
+
+        if (DodgeChance <= CurrentTarget.DodgeRate)
+        {
+            GetComponent<EntityCreation>().CreatePopUpIcon(CurrentTarget, 0, "Dodged");
+            return;
+        }
+
+        int mitigatedDamage = (int)(damage - damage * CurrentTarget.ArmorBuffDebuff);
+        CurrentTarget.Hp -= mitigatedDamage;
+
+        CurrentAttacker.LoseHealth((int)(damage * CurrentTarget.RipostePercentage), null, false, false);
+
+        if (damage != 0)
+        { GetComponent<EntityCreation>().CreatePopUpIcon(CurrentTarget, mitigatedDamage, "Damage"); }
+        if (CurrentTarget.Hp > 0)
+        {
+            GetComponent<EntityCreation>().FlashUpEffect(CurrentTarget);
+            return;
+        }
+
+        CurrentTarget.Hp = 0;
+        CurrentTarget.Mana = 0;
+        CurrentTarget.IsKo = true;
+        GetComponent<EntityCreation>().DeathOrRevive();
+        return;
+    }
+
+    [PunRPC]
+    public void RPC_Stun(int targetID)
+    {
+        Entity CurrentTarget = GameObject.Find("Game Manager Battle").GetComponent<EntityCreation>().EntityList[targetID];
+        CurrentTarget.IsStunned = true;
     }
 }
