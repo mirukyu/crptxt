@@ -131,7 +131,7 @@ public class TextManager : MonoBehaviour
         {
             case "Return":
                 BackToActionSelect();
-                GetComponent<Combat>().Reset();
+                GetComponent<Combat>().ResetAll();
                 GetComponent<EntityCreation>().ApplyTargetable(TargetStyle.Default, null);
                 break;
             case "Attack":

@@ -17,6 +17,9 @@ public class SFXManager : MonoBehaviour
 
     private Object[] Win;
     private Object[] Lose;
+    private Object[] MinigameEnd;
+    private Object[] DiveIntoHeck;
+    private Object[] KFC;
 
     void Start()
     {
@@ -24,6 +27,9 @@ public class SFXManager : MonoBehaviour
         
         Win = Resources.LoadAll("SFX/Win", typeof(AudioClip));
         Lose = Resources.LoadAll("SFX/Lose", typeof(AudioClip));
+        MinigameEnd = Resources.LoadAll("SFX/Miscellaneous", typeof(AudioClip));
+        DiveIntoHeck = Resources.LoadAll("SFX/DiveIntoHeck", typeof(AudioClip));
+        KFC = Resources.LoadAll("SFX/KFC", typeof(AudioClip));
     }
 
     public void PlaySFX(string sound_name, string FolderName)
@@ -42,6 +48,15 @@ public class SFXManager : MonoBehaviour
                 myAudio.clip = (AudioClip)Lose[Random.Range(0, Lose.Length)];
                 StartCoroutine(GameObject.Find("Game Manager Battle").GetComponent<AudioManager>().UnpausePlay(myAudio.clip.length));
                 break;
+            case "MinigameEnd":
+                myAudio.clip = (AudioClip)MinigameEnd[Random.Range(0, MinigameEnd.Length)];
+                break;
+            case "DiveIntoHeck":
+                myAudio.clip = (AudioClip)DiveIntoHeck[Random.Range(0, DiveIntoHeck.Length)];
+                break;
+            case "KFC":
+                myAudio.clip = (AudioClip)KFC[Random.Range(0, KFC.Length)];
+                break;
         }
 
         if (myAudio.clip == null)
@@ -54,5 +69,9 @@ public class SFXManager : MonoBehaviour
     }
 
     public float GetClipLength()
-    { return myAudio.clip.length; }
+    {
+        if (!myAudio.isPlaying)
+            return 0;
+        return myAudio.clip.length;
+    }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 /* General Structure:
  * 1) Setup: ALL FUCKING VARIABLES, THERE ARE SO MANY KARIM (with getter and setter)
  * 2) Constructor
- * 3) Methods: Base Attack, Spend Mana, Lose Health, Heal, Regenerate Mana, Attack, Receive Damage Buff Debuff, Receive Armor Buff Debuff, Ailment Clearance, Revive, Apply AoE
+ * 3) Methods: Base Attack, Spend Mana, Lose Health, Heal, Regenerate Mana, Attack, Receive Damage Buff Debuff, Receive Armor Buff Debuff, Ailment Clearance, Revive, Apply AoE, HealAndManaRegenFromMinigame
  */
 
 public enum EntityType
@@ -337,6 +337,20 @@ public class Entity
                 { Attack(target, (int)value); }
                 break;
         }
+    }
+
+    public void HealAndManaRegenFromMinigame(int heal, int mana)
+    {
+        if (Hp != 0)
+        { Hp += heal; }
+
+        if (Hp > MaxHp)
+        { Hp = MaxHp; }
+
+        Mana += mana;
+
+        if (Mana > MaxMana)
+        { Mana = MaxMana; }
     }
     #endregion
 }

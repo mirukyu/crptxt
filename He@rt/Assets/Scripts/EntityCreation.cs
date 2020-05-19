@@ -28,7 +28,7 @@ public class EntityCreation : MonoBehaviour
 
     //////////////////////////////////////////////
 
-    private bool BossBattle = false; // This boolean switches between Boss Fight and Normal Fight
+    public bool BossBattle; // This boolean switches between Boss Fight and Normal Fight
 
     [SerializeField] private GameObject NPC1Overview;
     [SerializeField] private GameObject NPC2Overview;
@@ -60,6 +60,7 @@ public class EntityCreation : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        BossBattle = TraversalManager.BossBattle;
 
         Player2Overview.SetActive(false);
         Player3Overview.SetActive(false);
@@ -113,10 +114,10 @@ public class EntityCreation : MonoBehaviour
             enemy4 = NPCCreation(EntityType.WispRed, 7);
             */
 
-            enemy1 = NPCCreation(CharacterSetUp.Enemy1Type, 4);
-            enemy2 = NPCCreation(CharacterSetUp.Enemy2Type, 5);
-            enemy3 = NPCCreation(CharacterSetUp.Enemy3Type, 6);
-            enemy4 = NPCCreation(CharacterSetUp.Enemy4Type, 7);
+            enemy1 = NPCCreation(TraversalManager.Enemy1Type, 4);
+            enemy2 = NPCCreation(TraversalManager.Enemy2Type, 5);
+            enemy3 = NPCCreation(TraversalManager.Enemy3Type, 6);
+            enemy4 = NPCCreation(TraversalManager.Enemy4Type, 7);
         }
 
         NPC2Overview.SetActive(false);
@@ -487,8 +488,6 @@ public class EntityCreation : MonoBehaviour
         if (enemy4 == target)
         { ModelToAffect = NPC4Model; }
 
-        Debug.Log(target.Type);
-
         StartCoroutine(FlashUpColour(ModelToAffect));
     }
 
@@ -567,7 +566,7 @@ public class EntityCreation : MonoBehaviour
 
     [PunRPC]
     public void RPC_LoseHealth(int attackerID, int targetID, int damage, float DodgeChance)
-    // Loses Health BUT for RPC Callse (only called once in the usage of Attack (since that is the only case where a dodge can happen -> thus being the sole factor with desynchronization))
+    // Loses Health BUT for RPC Calls (only called once in the usage of Attack (since that is the only case where a dodge can happen -> thus being the sole factor with desynchronization))
     {
         List<Entity> EntityList = GameObject.Find("Game Manager Battle").GetComponent<EntityCreation>().EntityList;
 

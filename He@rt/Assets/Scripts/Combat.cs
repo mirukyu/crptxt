@@ -43,7 +43,10 @@ public class Combat : MonoBehaviour {                 // SPELLINDEX 7 IS USED FO
     public IEnumerator PlayAudio()
     {
         yield return new WaitForSeconds(0.1f);
-        GetComponent<AudioManager>().PlayTheme(ThemeStyle.Battle);
+        if (GetComponent<EntityCreation>().BossBattle)
+            GetComponent<AudioManager>().PlayTheme(ThemeStyle.Boss);
+        else
+            GetComponent<AudioManager>().PlayTheme(ThemeStyle.Battle);
     }
 
     ///////////////////////////////
@@ -128,16 +131,10 @@ public class Combat : MonoBehaviour {                 // SPELLINDEX 7 IS USED FO
         PV.RPC("RPC_Reset", RpcTarget.All);
         PV.RPC("RPC_RemoveAttackRecap", RpcTarget.All);
 
-        if (GetComponent<EntityCreation>().GetPlayers().Count == 0)
-        {
-            GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("Lose", "");
-            Debug.Log("Anima won! Return to Traversal!");
-        }
-        if (GetComponent<EntityCreation>().GetNPCs().Count == 0)
-        {
-            GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("Win", "");
-            Debug.Log("Persona won! Return to Traversal!");
-        }
+        if (GetComponent<EntityCreation>().GetPlayers().Count == 0) // Win & Lose Criteria
+            GetComponent<GameManager>().Return2Traversal("Lose");
+        else if (GetComponent<EntityCreation>().GetNPCs().Count == 0)
+            GetComponent<GameManager>().Return2Traversal("Win");
 
         PV.RPC("RPC_VerfiyState", RpcTarget.All);
     }
@@ -156,7 +153,7 @@ public class Combat : MonoBehaviour {                 // SPELLINDEX 7 IS USED FO
         }
     }
 
-    public void Reset()
+    public void ResetAll()
     {
         target = null;
         spellIndex = -1;
@@ -283,13 +280,15 @@ public class Combat : MonoBehaviour {                 // SPELLINDEX 7 IS USED FO
 
     [PunRPC]
     private void RPC_OverviewUpdate()
-    { GetComponent<EntityCreation>().UpdateAllOverviews(); }
+    {
+        GetComponent<EntityCreation>().UpdateAllOverviews();
+        GetComponent<EntityCreation>().DeathOrRevive(); ///////////////////
+    }
 
     [PunRPC]
     private void RPC_Reset()
     {
-        target = null;
-        spellIndex = -1;
+        ResetAll();
 
         GetComponent<EntityCreation>().ApplyTargetable(TargetStyle.Default, null);
 
@@ -309,7 +308,7 @@ public class Combat : MonoBehaviour {                 // SPELLINDEX 7 IS USED FO
             PV.RPC("RPC_AddAttack2AttackList", RpcTarget.MasterClient, attacker.EntityID, 0, 0);
         }
 
-        if (attacker.IsStunned) // Stun
+        else if (attacker.IsStunned) // Stun
         {
             GetComponent<TextManager>().SetBarrier();
             PV.RPC("RPC_SetAttackRecapSpecial", RpcTarget.All, attacker.EntityID, "Stunned");

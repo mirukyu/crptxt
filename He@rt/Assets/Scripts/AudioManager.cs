@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum ThemeStyle
-{ Ambient, Battle, Boss, End, EventMystic, EventNegative, EventPositive, Minigame, Suspense, TraversalCastle , TraversalCave, TraversalFields, TraversalTown, Unique};
+{ Ambient, Battle, Boss, End, EventMystic, EventNegative, EventPositive, MinigameKFC, MinigameDiveIntoHecc, Suspense, TraversalCastle , TraversalCave, TraversalFields, TraversalTown, Traversal, Unique};
 
 public class AudioManager : MonoBehaviour {
 
@@ -30,13 +30,16 @@ public class AudioManager : MonoBehaviour {
         PlayTheme(tmp);
     }
 
+    public float GetClipLength()
+    { return myAudio.clip.length; }
+
     public void StopPlay() // Pause and Unpause Functions
     { myAudio.Pause(); }
     public IEnumerator UnpausePlay(float delay) 
     {
         yield return new WaitForSeconds(delay);                                   // UNPAUSE PLAY and FADEIN and FADEOUT have to be called with StartCoroutine();;
         myAudio.Play();
-        StartCoroutine(FadeIn(6f));
+        StartCoroutine(FadeIn(3f));
     }
 
     public IEnumerator FadeIn(float duration)  // Fade In
@@ -87,8 +90,11 @@ public class AudioManager : MonoBehaviour {
             case ThemeStyle.EventPositive:
                 path = "Events/Positive";
                 break;
-            case ThemeStyle.Minigame:
-                path = "Minigame";
+            case ThemeStyle.MinigameKFC:
+                path = "MinigameKFC";
+                break;
+            case ThemeStyle.MinigameDiveIntoHecc:
+                path = "MinigameDiveIntoHeck";
                 break;
             case ThemeStyle.Suspense:
                 path = "Suspense";
@@ -105,6 +111,10 @@ public class AudioManager : MonoBehaviour {
             case ThemeStyle.TraversalTown:
                 path = "Traversal/Town";
                 break;
+            case ThemeStyle.Traversal:
+                List<ThemeStyle> TraversalList = new List<ThemeStyle> { ThemeStyle.TraversalCastle, ThemeStyle.TraversalCave, ThemeStyle.TraversalFields, ThemeStyle.TraversalTown };
+                PlayTheme(TraversalList[Random.Range(0,TraversalList.Count)]);
+                return;
             case ThemeStyle.Unique:
                 path = "Unique";
                 break;

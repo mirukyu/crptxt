@@ -83,7 +83,7 @@ public class CharacterMenuManager : MonoBehaviourPunCallbacks
     public IEnumerator LoadNextScene()
     {
         yield return new WaitForSeconds(3f);
-        SceneManager.LoadScene("Battle Arena");
+        SceneManager.LoadScene("TMPTraversal");
     }
 
     public void PressButton(string Function)

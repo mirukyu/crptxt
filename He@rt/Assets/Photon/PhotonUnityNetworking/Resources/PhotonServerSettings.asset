@@ -55,5 +55,11 @@ MonoBehaviour:
   - RPC_Stun
   - RPC_OverviewUpdate
   - RPC_SetEnemyTypes
+  - RPC_SetResult
+  - RPC_LoadingBack
+  - RPC_LoadingIconSet
+  - RPC_ApplyResult
+  - RPC_LoadBack
+  - RPC_SetBossBattle
   DisableAutoOpenWizard: 1
   ShowSettings: 1

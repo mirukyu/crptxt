@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 387cf143c7b75d94cbc55cd4203d1e4f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - sprite1: {fileID: 21300000, guid: c3914852e85a92245be48ed176a22504, type: 3}
+  - sprite2: {fileID: 21300000, guid: a0cb7686d53623e4ba24ac770c30e0b7, type: 3}
+  - sprite3: {fileID: 21300000, guid: 25635afcc5e49984bb647cefc3359206, type: 3}
+  - sprite4: {fileID: 21300000, guid: 16c25ba9ede632c4cb85e92093320d4b, type: 3}
+  - sprite5: {fileID: 21300000, guid: d3b71ff5c5307c447850992620d58dfe, type: 3}
+  - sprite6: {fileID: 21300000, guid: 80a827f90e8a6e54e9c32525c5b3b3cd, type: 3}
+  - sprite7: {fileID: 21300000, guid: cda45780a3e76264f8a2bd116c96c3d6, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
