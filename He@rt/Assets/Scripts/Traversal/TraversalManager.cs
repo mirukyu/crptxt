@@ -48,9 +48,13 @@ public class TraversalManager : MonoBehaviour {
     private static GameObject[] EnemiesList;
     private static List<List<Entity>> EnemiesForEachInstance = new List<List<Entity>>();
 
+    private static GameObject[] MiniGameObjectList;
+    private static List<bool> MiniGameObjectActivatedList = new List<bool>();
+
     public void Awake()
     {
         EnemiesList = GameObject.FindGameObjectsWithTag("Enemy");
+        MiniGameObjectList = GameObject.FindGameObjectsWithTag("MiniGame");
         SetIDs();
 
         if (PhotonNetwork.IsMasterClient)
@@ -58,6 +62,9 @@ public class TraversalManager : MonoBehaviour {
             for (int i = 0; i < EnemiesList.Length; i++)
                 GetComponent<PhotonView>().RPC("RPC_SetEnemyTypes", RpcTarget.All, Random.Range(0, PossibleEnemyTypes.Length), Random.Range(0, PossibleEnemyTypes.Length), 
                     Random.Range(0, PossibleEnemyTypes.Length), Random.Range(0, PossibleEnemyTypes.Length), i);
+
+            for (int i = 0; i < MiniGameObjectList.Length; i++)
+                MiniGameObjectActivatedList.Add(false);
         }
     }
 
@@ -65,6 +72,9 @@ public class TraversalManager : MonoBehaviour {
     {
         for (int i = 0; i < EnemiesList.Length; i++)
         { EnemiesList[i].GetComponent<EnemyTraversal>().SetMyID(i); }
+
+        for (int i = 0; i < MiniGameObjectList.Length; i++)
+        { MiniGameObjectList[i].GetComponent<MinigameObject>().SetMyID(i); }
     }
 
     public void SetEnemies()
@@ -73,6 +83,15 @@ public class TraversalManager : MonoBehaviour {
         {
             if (EnemiesList[i] != null)
                 EnemiesList[i].GetComponent<EnemyTraversal>().SetMyEnemies(EnemiesForEachInstance[i]);
+        }
+    }
+
+    public void SetMiniGames()
+    {
+        for (int i = 0; i < MiniGameObjectList.Length; i++)
+        {
+            if (MiniGameObjectActivatedList[i] == true)
+                Destroy(MiniGameObjectList[i]);
         }
     }
 
@@ -111,6 +130,7 @@ public class TraversalManager : MonoBehaviour {
     public void Start()
     {
         SetEnemies();
+        SetMiniGames();
 
         MoveAllowed = true;
 
@@ -281,8 +301,10 @@ public class TraversalManager : MonoBehaviour {
         }
     }
 
-    public void InitiateMinigame()
+    public void InitiateMinigame(int EncounteredMiniGameObjectID)
     {
+        MiniGameObjectActivatedList[EncounteredMiniGameObjectID] = true;
+
         if (Random.Range(0, 3) == 0)
             LoadKFC();
         else
