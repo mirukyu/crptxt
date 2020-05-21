@@ -114,10 +114,10 @@ public class EntityCreation : MonoBehaviour
             enemy4 = NPCCreation(EntityType.WispRed, 7);
             */
 
-            enemy1 = NPCCreation(TraversalManager.Enemy1Type, 4);
-            enemy2 = NPCCreation(TraversalManager.Enemy2Type, 5);
-            enemy3 = NPCCreation(TraversalManager.Enemy3Type, 6);
-            enemy4 = NPCCreation(TraversalManager.Enemy4Type, 7);
+            enemy1 = TraversalManager.Enemy1;
+            enemy2 = TraversalManager.Enemy2;
+            enemy3 = TraversalManager.Enemy3;
+            enemy4 = TraversalManager.Enemy4;
         }
 
         NPC2Overview.SetActive(false);
@@ -161,7 +161,7 @@ public class EntityCreation : MonoBehaviour
         UpdateAllOverviews();
     }
 
-    public Entity NPCCreation(EntityType type, int entityID) // Creates an NPC 
+    public static Entity NPCCreation(EntityType type, int entityID) // Creates an NPC 
     {
         Entity tmp = null;
         switch (type)
@@ -192,7 +192,7 @@ public class EntityCreation : MonoBehaviour
 
     }
 
-    private string GetModel(EntityType character) // links the entity type to the player model
+    public static string GetModel(EntityType character) // links the entity type to the player model
     {
         switch (character)
         {
@@ -318,17 +318,28 @@ public class EntityCreation : MonoBehaviour
             MaxHealthLevel += entity.MaxHp;
         }
 
-        return (CurrentHealthLevel / MaxHealthLevel);
+        return MaxHealthLevel == 0 ? 0 : (CurrentHealthLevel / MaxHealthLevel);
     }
 
     public Entity FindTarget(string TargetPattern, TargetStyle TargetType, Entity caster) // Chooses A Random Valid Target For an NPC based on a Target Pattern
     {
         List<Entity> PossibleTargets = new List<Entity>() { };
 
-        if (TargetType == TargetStyle.Enemies || TargetType == TargetStyle.AoEEnemies)
-        { PossibleTargets = GetPlayers(); }
-        if (TargetType == TargetStyle.Teammates || TargetType == TargetStyle.AoETeammates)
-        { PossibleTargets = GetNPCs(); }
+        if (caster is NPC)
+        {
+            if (TargetType == TargetStyle.Enemies || TargetType == TargetStyle.AoEEnemies)
+            { PossibleTargets = GetPlayers(); }
+            if (TargetType == TargetStyle.Teammates || TargetType == TargetStyle.AoETeammates)
+            { PossibleTargets = GetNPCs(); }
+        }
+        if (caster is Player)
+        {
+            if (TargetType == TargetStyle.Enemies || TargetType == TargetStyle.AoEEnemies || TargetType == TargetStyle.BaseAttack)
+            { PossibleTargets = GetNPCs(); }
+            if (TargetType == TargetStyle.Teammates || TargetType == TargetStyle.AoETeammates)
+            { PossibleTargets = GetPlayers(); }
+        }
+
         if (TargetType == TargetStyle.Self)
         { return caster; };
 
@@ -359,6 +370,32 @@ public class EntityCreation : MonoBehaviour
         }
 
         return target;
+    }
+
+    public Entity FindTargetSpecial(TargetStyle targetStyle)
+    {
+        List<Entity> PossibleTargets = GetComponent<EntityCreation>().GetPlayers();
+
+        System.Func<Entity, bool> condition = null;
+
+        switch (targetStyle)
+        {
+            case TargetStyle.Revive:
+                condition = (e => e.IsKo);
+                break;
+            case TargetStyle.Karim:
+                condition = (e => !e.IsKo && e.Type == EntityType.Crusader);
+                break;
+            case TargetStyle.지영아:
+                condition = (e => !e.IsKo && e.Type == EntityType.Priestess);
+                break;
+        }
+
+        foreach (Entity e in PossibleTargets)
+            if (condition(e))
+                return e;
+
+        return null;
     }
 
     public GameObject FindTargetPosition(Entity target) // Returns the corresponding player spot

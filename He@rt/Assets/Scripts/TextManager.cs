@@ -145,10 +145,12 @@ public class TextManager : MonoBehaviour
                 GetComponent<EntityCreation>().ApplyTargetable(TargetStyle.Default, null);
                 break;
             case "Flee":
-                if (Random.Range(0f, 1f) <= 0.8f * GameObject.Find("Game Manager Battle").GetComponent<EntityCreation>().GetTeamHealthLevel())
-                { OutputTextMinor("You could successfully flee!"); }
+                if (CharacterSetUp.Game.myID == TraversalManager.CurrentPartyLeader)
+                {
+                    GetComponent<Combat>().FleeAttempt();
+                }
                 else
-                { OutputTextMinor("Failure! Keep fighting you coward!"); }
+                { OutputTextMinor("Only the Party Leader may choose to Flee!"); }
                 break;
             case "Play Random":
                 GetComponent<AudioManager>().PlayRandom();

@@ -83,7 +83,7 @@ public class CharacterMenuManager : MonoBehaviourPunCallbacks
     public IEnumerator LoadNextScene()
     {
         yield return new WaitForSeconds(3f);
-        SceneManager.LoadScene("TMPTraversal");
+        SceneManager.LoadScene("Traversal");
     }
 
     public void PressButton(string Function)
@@ -273,7 +273,7 @@ public class CharacterMenuManager : MonoBehaviourPunCallbacks
         {
             case EntityType.Aramusha:
                 return "Models/Persona/Aramusha";
-            case EntityType.Priestress:
+            case EntityType.Priestess:
                 return "Models/Persona/Priestess";
             case EntityType.Mage:
                 return "Models/Persona/Mage";

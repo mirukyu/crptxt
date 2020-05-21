@@ -62,7 +62,7 @@ public class AudioManager : MonoBehaviour {
 
     public void PlayTheme(ThemeStyle theme) // Calling the respective theme to play, from there takes a random file
     {
-        myAudio.volume = 0.45f;
+        myAudio.volume = PauseMenuManager.AudioVolume;
         string path = "";
 
         switch (theme)
@@ -71,11 +71,11 @@ public class AudioManager : MonoBehaviour {
                 path = "Ambient";
                 break;
             case ThemeStyle.Battle:
-                myAudio.volume = 0.35f;
+                myAudio.volume *= 0.8f;
                 path = "Battle";
                 break;
             case ThemeStyle.Boss:
-                myAudio.volume = 0.3f;
+                myAudio.volume *= 0.7f;
                 path = "Boss";
                 break;
             case ThemeStyle.End:

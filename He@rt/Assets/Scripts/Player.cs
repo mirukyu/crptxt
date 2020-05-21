@@ -42,7 +42,7 @@ public class Player : Entity // Do Ashley as secret acharacter
         {
             case EntityType.Aramusha:
                 return ((Aramusha)entity).GetAttackName(index);
-            case EntityType.Priestress:
+            case EntityType.Priestess:
                 return ((Priestress)entity).GetAttackName(index);
             case EntityType.Mage:
                 return ((Mage)entity).GetAttackName(index);
@@ -59,7 +59,7 @@ public class Player : Entity // Do Ashley as secret acharacter
         {
             case EntityType.Aramusha:
                 return ((Aramusha)entity).GetAttackDescription(index);
-            case EntityType.Priestress:
+            case EntityType.Priestess:
                 return ((Priestress)entity).GetAttackDescription(index);
             case EntityType.Mage:
                 return ((Mage)entity).GetAttackDescription(index);
@@ -76,7 +76,7 @@ public class Player : Entity // Do Ashley as secret acharacter
         {
             case EntityType.Aramusha:
                 return ((Aramusha)entity).GetAttackDetail(index);
-            case EntityType.Priestress:
+            case EntityType.Priestess:
                 return ((Priestress)entity).GetAttackDetail(index);
             case EntityType.Mage:
                 return ((Mage)entity).GetAttackDetail(index);
@@ -89,11 +89,14 @@ public class Player : Entity // Do Ashley as secret acharacter
 
     public int GetManaRequirementGeneral (int index, Entity entity)
     {
+        if (index == 7)
+            return 0;
+
         switch (entity.Type)
         {
             case EntityType.Aramusha:
                 return ((Aramusha)entity).GetManaRequirement(index);
-            case EntityType.Priestress:
+            case EntityType.Priestess:
                 return ((Priestress)entity).GetManaRequirement(index);
             case EntityType.Mage:
                 return ((Mage)entity).GetManaRequirement(index);
@@ -106,11 +109,14 @@ public class Player : Entity // Do Ashley as secret acharacter
 
     public TargetStyle GetAttackTargetGeneral (int index, Entity entity)
     {
+        if (index == 7)
+            return TargetStyle.Enemies;
+
         switch (entity.Type)
         {
             case EntityType.Aramusha:
                 return ((Aramusha)entity).GetAttackTarget(index);
-            case EntityType.Priestress:
+            case EntityType.Priestess:
                 return ((Priestress)entity).GetAttackTarget(index);
             case EntityType.Mage:
                 return ((Mage)entity).GetAttackTarget(index);
@@ -128,7 +134,7 @@ public class Player : Entity // Do Ashley as secret acharacter
             case EntityType.Aramusha:
                 ((Aramusha)attacker).UseSpell(index, target);
                 break;
-            case EntityType.Priestress:
+            case EntityType.Priestess:
                 ((Priestress)attacker).UseSpell(index, target);
                 break;
             case EntityType.Mage:

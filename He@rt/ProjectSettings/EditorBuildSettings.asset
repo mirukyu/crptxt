@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Character Selection.unity
     guid: e550bcdd9b3b6684b9d8f47ce24d49c2
   - enabled: 1
-    path: Assets/Scenes/TMPTraversal.unity
+    path: Assets/Scenes/Traversal.unity
     guid: 0766ce5360b431d46826c6404b3de98f
   - enabled: 1
     path: Assets/Scenes/Battle Arena.unity
@@ -23,3 +23,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/KFC.unity
     guid: 9cd68aa63c46612419c2e64939f92fbe
+  - enabled: 1
+    path: Assets/Scenes/EndScreen.unity
+    guid: dc999c4772128424b880ededd0b632bc

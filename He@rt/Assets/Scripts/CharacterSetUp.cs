@@ -50,7 +50,7 @@ public class CharacterSetUp : MonoBehaviour {
             case EntityType.Aramusha:
                 tmp = new Aramusha(username, entityID);
                 break;
-            case EntityType.Priestress:
+            case EntityType.Priestess:
                 tmp = new Priestress(username, entityID);
                 break;
             case EntityType.Mage:

@@ -32,7 +32,7 @@ public class JackOLantern : NPC                                                 
 
     #region Constructor
     public JackOLantern(int entityID)
-            : base(entityID, EntityType.JackOLantern, "Jack-O-Lantern", 200, 10, 0.25f, 3)
+            : base(entityID, EntityType.JackOLantern, "Jack-O-Lantern", 175, 10, 0.25f, 3)
     { }
     #endregion
 
@@ -89,7 +89,7 @@ public class Skelly : NPC                                                       
 
     #region Constructor
     public Skelly(int entityID)
-            : base(entityID, EntityType.Skelly, "Skelly", 150, 10, 0f, 3)
+            : base(entityID, EntityType.Skelly, "Skelly", 125, 10, 0f, 3)
     { }
     #endregion
 

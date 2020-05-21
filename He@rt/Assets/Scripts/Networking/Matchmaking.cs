@@ -50,7 +50,7 @@ public class Matchmaking : MonoBehaviourPunCallbacks {
     // They are in RoomController
 
     // Cancelling
-    public void Cancel()
+    public static void LeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
     }

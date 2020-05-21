@@ -98,7 +98,7 @@ public class DiveIntoHeccManager : MonoBehaviour
     public IEnumerator LoadTraversal()
     {
         yield return new WaitForSeconds(GameObject.Find("SFX Manager").GetComponent<SFXManager>().GetClipLength() + 1f);
-        SceneManager.LoadScene("TMPTraversal");
+        SceneManager.LoadScene("Traversal");
     }
 
     [PunRPC]

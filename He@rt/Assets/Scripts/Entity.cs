@@ -11,7 +11,7 @@ using UnityEngine;
 
 public enum EntityType
 {
-    Aramusha, Priestress, Mage, Crusader, JackOLantern, Skelly, WispBlue, WispRed, BunBun, DEFAULT
+    Aramusha, Priestess, Mage, Crusader, JackOLantern, Skelly, WispBlue, WispRed, BunBun, DEFAULT
 }
 
 public class Entity

@@ -7,8 +7,8 @@ public class PlayerMovement : MonoBehaviour {
 
     private PhotonView PV;
     private CharacterController myCC;
-    public float movementSpeed = 25;
-    public float rotationSpeed = 300;
+    public float movementSpeed = 5;
+    public float rotationSpeed = 10;
 
 	// Use this for initialization
 	void Start () {
@@ -18,11 +18,8 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (PV.IsMine)
-        {
             BasicMovement();
             BasicRotation();
-        }
 	}
 
     void BasicMovement()

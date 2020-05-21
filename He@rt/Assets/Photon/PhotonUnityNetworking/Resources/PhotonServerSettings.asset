@@ -61,5 +61,15 @@ MonoBehaviour:
   - RPC_ApplyResult
   - RPC_LoadBack
   - RPC_SetBossBattle
+  - RPC_SetInfo
+  - RPC_CameraMovement
+  - RPC_Move
+  - RPC_PlayWalkingSound
+  - RPC_SetCurrentLeaderName
+  - RPC_SetMinigameRecap
+  - RPC_Flee
+  - FailedFlee
+  - RPC_StartBattle
+  - RPC_StartMinigame
   DisableAutoOpenWizard: 1
   ShowSettings: 1

@@ -10,98 +10,60 @@ public class GameManager : MonoBehaviour
     private PhotonView PV;
 
     public GameObject PlayMenu;
-    public GameObject PauseMenu;
-    private bool escape_state;
-    private bool just_changed_escape_state;
 
     public GameObject LoadIcon;
     public GameObject CombatResultWin;
     public GameObject CombatResultLose;
+    public GameObject FleeMessage;
 
     // Start is called before the first frame update
     void Start()
     {
         PV = GetComponent<PhotonView>();
 
-        PauseMenu.SetActive(false);
         PlayMenu.SetActive(true);
         LoadIcon.SetActive(false);
         CombatResultWin.SetActive(false);
         CombatResultLose.SetActive(false);
+        FleeMessage.SetActive(false);
 
-        string OutputTextTest = "This is purely an example as I have zero idea as what this should do. Hipefully it works as expected because I dont want to waste time.";
-        GetComponent<TextManager>().OutputTextMain(OutputTextTest);
+        GetComponent<TextManager>().OutputTextMain("");
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SuccessfullFleeing()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) //Pause
-        {
-            if (escape_state == false && just_changed_escape_state == false)
-            {
-                /*
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-                */
-                Time.timeScale = 0;
-                escape_state = true;
-                PlayMenu.SetActive(false);
-                PauseMenu.SetActive(true);
-                just_changed_escape_state = true;
-            }
-            if (escape_state == true && just_changed_escape_state == false)
-            {
-                /*
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-                */
-                Time.timeScale = 1;
-                escape_state = false;
-                PlayMenu.SetActive(true);
-                PauseMenu.SetActive(false);
-            }
-            just_changed_escape_state = false;
-        }
-    }
-
-    public void PressButton(string ButtonFunction) //Buttons in Pause Menu
-    {
-        switch (ButtonFunction)
-        {
-            case "Restart":
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                break;
-            case "ExitGame":
-                Application.Quit();
-                break;
-            case "BackToMainMenu":
-                SceneManager.LoadScene("Main Menu");
-                break;
-            case "Resume":
-                escape_state = false;
-                PlayMenu.SetActive(true);
-                PauseMenu.SetActive(false);
-                break;
-        }
-        Time.timeScale = 1;
-        /*
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        */
+        PV.RPC("RPC_Flee", RpcTarget.All);
+        Return2Traversal("Lose");
     }
 
     public void Return2Traversal(string result)
     {
         PV.RPC("RPC_LoadBack", RpcTarget.All, result);
-        
-        StartCoroutine(LoadTraversal());
+
+        if (result == "Win" & TraversalManager.BossBattle)
+        {
+            EndScreenManager.BeatGame = true;
+            StartCoroutine(LoadEndScreen());
+        }
+        else if (result == "Lose" && GetComponent<EntityCreation>().GetTeamHealthLevel() == 0)
+        {
+            EndScreenManager.BeatGame = false;
+            StartCoroutine(LoadEndScreen());
+        }
+        else
+        { StartCoroutine(LoadTraversal()); }
     }
 
     public IEnumerator LoadTraversal()
     {
         yield return new WaitForSeconds(GameObject.Find("SFX Manager").GetComponent<SFXManager>().GetClipLength() + 0.5f);
-        SceneManager.LoadScene("TMPTraversal");
+        SceneManager.LoadScene("Traversal");
+    }
+
+    public IEnumerator LoadEndScreen()
+    {
+        yield return new WaitForSeconds(GameObject.Find("SFX Manager").GetComponent<SFXManager>().GetClipLength() + 0.5f);
+        SceneManager.LoadScene("EndScreen");
     }
 
     [PunRPC]
@@ -111,11 +73,15 @@ public class GameManager : MonoBehaviour
 
         if (result == "Win")
             CombatResultWin.SetActive(true);
-        else
+        if (GetComponent<EntityCreation>().GetTeamHealthLevel() == 0)
             CombatResultLose.SetActive(true);
 
         LoadIcon.SetActive(true);
 
         StartCoroutine(GetComponent<AudioManager>().FadeOut(3f));
     }
+
+    [PunRPC]
+    private void RPC_Flee()
+    { FleeMessage.SetActive(true); TraversalManager.JustFled = true; }
 }

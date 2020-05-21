@@ -74,7 +74,7 @@ public class Aramusha : Player                                                  
 
     #region Constructor
     public Aramusha(string username, int entityID)  // Near Death State
-            : base(username, entityID, EntityType.Aramusha, "Aramusha",50, 100, 20, 0.25f, 6)
+            : base(username, entityID, EntityType.Aramusha, "Aramusha", 50, 100, 25, 0.3f, 6)
     { }
     #endregion
 
@@ -164,7 +164,7 @@ public class Priestress : Player                                                
         "Clear all ailments off of one seemingly very unlucky soul (bonus package: get a life).",
         "No Life? No Friends? Here's the solution: Heal all of y'all!.",
         "With thy Grace, revive thee who put aside his own life for others.",
-        "Totally original, unrigged, innovative move: BLOWS UP the enemies (requires a stack tho)." // put the stack here
+        "Totally original, unrigged, innovative move: BLOWS UP the enemies." // put the stack here
     };
 
     List<string> AttackDetails = new List<string>()
@@ -174,7 +174,7 @@ public class Priestress : Player                                                
         "Target: Teammate \n Heal: +15 \n Ailment Clearance \n Spell Boost applicable",
         "Target: AoE Teammates \n Heal: +35 \n\n Spell Boost applicable",
         "Target: Teammate \n Revive \n (Target must be KO)",
-        "Target: AoE Enemies \n Damage: 50 \n\n Killing Blow for charge"
+        "Target: AoE Enemies \n Damage: 50"
     };
 
     List<int> ManaRequirement = new List<int>()
@@ -200,7 +200,7 @@ public class Priestress : Player                                                
 
     #region Constructor
     public Priestress(string username, int entityID)
-            : base(username, entityID, EntityType.Priestress, "Priestress", 75, 200, 10, 0f, 6)
+            : base(username, entityID, EntityType.Priestess, "Priestess", 75, 200, 15, 0.1f, 6)
     { spellBoost = 1f; }
     #endregion
 
@@ -319,7 +319,7 @@ public class Mage : Player                                                      
 
     #region Constructor
     public Mage(string username, int entityID)
-            : base(username, entityID, EntityType.Mage, "Mage", 100, 150, 10, 0f, 6)
+            : base(username, entityID, EntityType.Mage, "Mage", 100, 150, 15, 0f, 6)
     { spellBoost = 1f; }
     #endregion
 
@@ -429,7 +429,7 @@ public class Crusader : Player                                                  
 
     #region Constructor 
     public Crusader(string username, int entityID)
-            : base(username, entityID, EntityType.Crusader, "Crusader", 200, 100, 15, 0f, 3)
+            : base(username, entityID, EntityType.Crusader, "Crusader", 200, 100, 20, 0f, 3)
     { }
     #endregion
 

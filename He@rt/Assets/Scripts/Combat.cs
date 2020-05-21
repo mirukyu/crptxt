@@ -127,6 +127,7 @@ public class Combat : MonoBehaviour {                 // SPELLINDEX 7 IS USED FO
             yield return new WaitForSeconds(GameObject.Find("SFX Manager").GetComponent<SFXManager>().GetClipLength() + 0.5f);
         }
 
+        yield return new WaitForSeconds(1f);
         AttackList = new List<List<int>>();
         PV.RPC("RPC_Reset", RpcTarget.All);
         PV.RPC("RPC_RemoveAttackRecap", RpcTarget.All);
@@ -159,6 +160,20 @@ public class Combat : MonoBehaviour {                 // SPELLINDEX 7 IS USED FO
         spellIndex = -1;
     }
 
+    public void FleeAttempt()
+    {
+        if (Random.Range(0f, 1f) >= 0.9f * GameObject.Find("Game Manager Battle").GetComponent<EntityCreation>().GetTeamHealthLevel())
+        {
+            GetComponent<GameManager>().SuccessfullFleeing();
+            GetComponent<TextManager>().OutputTextMinor("You could successfully flee!");
+        }
+        else
+        {
+            GetComponent<TextManager>().OutputTextMinor("Failure! Keep fighting you coward!");
+            PV.RPC("FailedFlee", RpcTarget.All, attacker.EntityID);
+        }
+    }
+
     ///////////////////////////////////////////////////// RPC Calls
 
     [PunRPC]
@@ -166,6 +181,9 @@ public class Combat : MonoBehaviour {                 // SPELLINDEX 7 IS USED FO
     {
         Entity CurrentAttacker = EntityList[attackerID];
         Entity CurrentTarget = EntityList[targetID];
+
+        if (CurrentAttacker.IsBleeding) // Bleed
+            CurrentAttacker.Bleed();
 
         // Chacking all Ailments
         if (CurrentAttacker.IsKo) // Died in Combat
@@ -184,15 +202,16 @@ public class Combat : MonoBehaviour {                 // SPELLINDEX 7 IS USED FO
         if (CurrentAttacker.IsExhausted) // Exhaustion
             CurrentAttacker.IsExhausted = false;
 
-        if (CurrentAttacker.IsBleeding) // Bleed
-            CurrentAttacker.Bleed();
-
         if (CurrentAttacker.IsConfused && ApplyConfuse) // Confusion
         {
             if (PhotonNetwork.IsMasterClient)
             {
                 if (attackerID <= 3)
+                {
                     attackIndex = Random.Range(0, ((Player)CurrentAttacker).AmountAttacks);
+                    if (((Player)CurrentAttacker).GetManaRequirementGeneral(attackIndex, attacker) > CurrentAttacker.Mana || CurrentAttacker.IsExhausted)
+                        attackIndex = 7;
+                }
                 else
                     attackIndex = Random.Range(0, ((NPC)CurrentAttacker).AmountAttacks);
                 PV.RPC("RPC_ExecuteAttack", RpcTarget.All, attackerID, targetID, attackIndex, false, ApplyBlind);
@@ -210,7 +229,23 @@ public class Combat : MonoBehaviour {                 // SPELLINDEX 7 IS USED FO
                 else
                     attackTarget = ((NPC)CurrentAttacker).GetAttackTargetGeneral(attackIndex, CurrentAttacker);
 
-                CurrentTarget = GetComponent<EntityCreation>().FindTarget("Random", attackTarget, CurrentAttacker);
+                if (attackTarget == TargetStyle.Revive || attackTarget == TargetStyle.지영아 || attackTarget == TargetStyle.Karim)
+                {
+                    Entity tmpTarget = GetComponent<EntityCreation>().FindTargetSpecial(attackTarget);
+
+                    if (attackTarget == TargetStyle.지영아 && tmpTarget == null)
+                        tmpTarget = GetComponent<EntityCreation>().FindTarget("Random", TargetStyle.Enemies, CurrentAttacker);
+
+                    if (tmpTarget == null)
+                    {
+                        PV.RPC("RPC_ExecuteAttack", RpcTarget.All, attackerID, CurrentTarget.EntityID, attackIndex, ApplyConfuse, true);
+                        return;
+                    }
+
+                    CurrentTarget = tmpTarget;
+                }
+                else
+                    CurrentTarget = GetComponent<EntityCreation>().FindTarget("Random", attackTarget, CurrentAttacker);
 
                 PV.RPC("RPC_ExecuteAttack", RpcTarget.All, attackerID, CurrentTarget.EntityID, attackIndex, ApplyConfuse, false);
             }
@@ -274,7 +309,7 @@ public class Combat : MonoBehaviour {                 // SPELLINDEX 7 IS USED FO
     {
         AttackList.Add(new List<int> { attackerID, targetID, attackIndex});
 
-        if (AttackList.Count == RoomController.room.playersInRoom)
+        if (GetComponent<EntityCreation>().GetTeamHealthLevel() != 0 && AttackList.Count == RoomController.room.playersInRoom)
             StartCoroutine(FullAttackExecution());
     }
 
@@ -304,6 +339,7 @@ public class Combat : MonoBehaviour {                 // SPELLINDEX 7 IS USED FO
         if (attacker.IsKo) // Is Dead
         {
             GetComponent<TextManager>().SetBarrier();
+            GetComponent<TextManager>().OutputTextMinor("You are Dead!");
             PV.RPC("RPC_SetAttackRecapSpecial", RpcTarget.All, attacker.EntityID, "Died");
             PV.RPC("RPC_AddAttack2AttackList", RpcTarget.MasterClient, attacker.EntityID, 0, 0);
         }
@@ -311,8 +347,21 @@ public class Combat : MonoBehaviour {                 // SPELLINDEX 7 IS USED FO
         else if (attacker.IsStunned) // Stun
         {
             GetComponent<TextManager>().SetBarrier();
+            GetComponent<TextManager>().OutputTextMinor("You are Stunned!");
             PV.RPC("RPC_SetAttackRecapSpecial", RpcTarget.All, attacker.EntityID, "Stunned");
             PV.RPC("RPC_AddAttack2AttackList", RpcTarget.MasterClient, attacker.EntityID, 0, 0);
+        }
+    }
+
+    [PunRPC]
+    void FailedFlee(int loserID)
+    {
+        if (attacker.EntityID == loserID)
+        {
+            GetComponent<TextManager>().SetBarrier();
+            PV.RPC("RPC_SetAttackRecapSpecial", RpcTarget.All, attacker.EntityID, "Failed Flee");
+            PV.RPC("RPC_AddAttack2AttackList", RpcTarget.MasterClient, attacker.EntityID, 0, 0);
+            attacker.IsStunned = true;
         }
     }
 }

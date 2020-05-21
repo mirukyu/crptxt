@@ -17,6 +17,7 @@ public class SFXManager : MonoBehaviour
 
     private Object[] Win;
     private Object[] Lose;
+    private Object[] Footsteps;
     private Object[] MinigameEnd;
     private Object[] DiveIntoHeck;
     private Object[] KFC;
@@ -27,6 +28,7 @@ public class SFXManager : MonoBehaviour
         
         Win = Resources.LoadAll("SFX/Win", typeof(AudioClip));
         Lose = Resources.LoadAll("SFX/Lose", typeof(AudioClip));
+        Footsteps = Resources.LoadAll("SFX/Footsteps", typeof(AudioClip));
         MinigameEnd = Resources.LoadAll("SFX/Miscellaneous", typeof(AudioClip));
         DiveIntoHeck = Resources.LoadAll("SFX/DiveIntoHeck", typeof(AudioClip));
         KFC = Resources.LoadAll("SFX/KFC", typeof(AudioClip));
@@ -35,7 +37,7 @@ public class SFXManager : MonoBehaviour
     public void PlaySFX(string sound_name, string FolderName)
     {
         myAudio.clip = null;
-        myAudio.volume = 0.5f;
+        myAudio.volume = PauseMenuManager.SFXVolume;
 
         switch (sound_name)
         {
@@ -47,6 +49,9 @@ public class SFXManager : MonoBehaviour
                 GameObject.Find("Game Manager Battle").GetComponent<AudioManager>().StopPlay();
                 myAudio.clip = (AudioClip)Lose[Random.Range(0, Lose.Length)];
                 StartCoroutine(GameObject.Find("Game Manager Battle").GetComponent<AudioManager>().UnpausePlay(myAudio.clip.length));
+                break;
+            case "Footsteps":
+                myAudio.clip = (AudioClip)Footsteps[Random.Range(0, Footsteps.Length)];
                 break;
             case "MinigameEnd":
                 myAudio.clip = (AudioClip)MinigameEnd[Random.Range(0, MinigameEnd.Length)];
