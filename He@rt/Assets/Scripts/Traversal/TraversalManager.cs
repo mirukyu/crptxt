@@ -47,9 +47,12 @@ public class TraversalManager : MonoBehaviour {
 
     private static GameObject[] EnemiesList;
     private static List<List<Entity>> EnemiesForEachInstance = new List<List<Entity>>();
+    private static int BossID;
 
     private static GameObject[] MiniGameObjectList;
     private static List<bool> MiniGameObjectActivatedList = new List<bool>();
+
+    private static bool Initiated = false;
 
     public void Awake()
     {
@@ -59,6 +62,8 @@ public class TraversalManager : MonoBehaviour {
 
         if (PhotonNetwork.IsMasterClient)
         {
+            GetComponent<PhotonView>().RPC("RPC_SetBossID", RpcTarget.All, Random.Range(0, EnemiesList.Length));
+
             for (int i = 0; i < EnemiesList.Length; i++)
                 GetComponent<PhotonView>().RPC("RPC_SetEnemyTypes", RpcTarget.All, Random.Range(0, PossibleEnemyTypes.Length), Random.Range(0, PossibleEnemyTypes.Length), 
                     Random.Range(0, PossibleEnemyTypes.Length), Random.Range(0, PossibleEnemyTypes.Length), i);
@@ -82,7 +87,7 @@ public class TraversalManager : MonoBehaviour {
         for (int i = 0; i < EnemiesList.Length; i++)
         {
             if (EnemiesList[i] != null)
-                EnemiesList[i].GetComponent<EnemyTraversal>().SetMyEnemies(EnemiesForEachInstance[i]);
+                EnemiesList[i].GetComponent<EnemyTraversal>().SetMyEnemies(EnemiesForEachInstance[i], i, BossID);
         }
     }
 
@@ -90,6 +95,8 @@ public class TraversalManager : MonoBehaviour {
     {
         for (int i = 0; i < MiniGameObjectList.Length; i++)
         {
+            MiniGameObjectList[i].GetComponent<MinigameObject>().SetMyID(i);
+
             if (MiniGameObjectActivatedList[i] == true)
                 Destroy(MiniGameObjectList[i]);
         }
@@ -103,7 +110,7 @@ public class TraversalManager : MonoBehaviour {
         Entity tmpEnemy3;
         Entity tmpEnemy4;
 
-        if (EnemiesList[myID].GetComponent<EnemyTraversal>().IsBoss)
+        if (myID == BossID)
             tmpEnemy1 = EntityCreation.NPCCreation(EntityType.BunBun, 4);
         else
             tmpEnemy1 = EntityCreation.NPCCreation(PossibleEnemyTypes[type1], 4);
@@ -127,15 +134,22 @@ public class TraversalManager : MonoBehaviour {
         EnemiesForEachInstance.Add(newList);
     }
 
+    [PunRPC]
+    private void RPC_SetBossID(int bossid)
+    {
+        if (Initiated)
+            return;
+        Initiated = true;
+        BossID = bossid;
+    }
+
     public void Start()
     {
+        Debug.Log(BossID);
         SetEnemies();
         SetMiniGames();
 
         MoveAllowed = true;
-
-        for (int i = 0; i < EnemiesList.Length; i++)
-        { EnemiesList[i].GetComponent<EnemyTraversal>().SetMyEnemies(EnemiesForEachInstance[i]); }
 
         NextPartyLeader();
         EntityType PartyLeaderType = EntityList[CurrentPartyLeader].Type;

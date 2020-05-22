@@ -22,20 +22,28 @@ public class EnemyTraversal : MonoBehaviour {
     private GameObject Root2Use;
     private GameObject PlayerModel;
 
-    public bool IsBoss = false;
+    private bool IsBoss = false;
 
     private int myID;
 
     public void SetMyID(int id)
     { myID = id; }
 
-    public void SetMyEnemies(List<Entity> myEnemies)
+    public void SetMyEnemies(List<Entity> myEnemies, int myid, int BossID)
     {
+        myID = myid;
+
         Enemy1 = myEnemies[0];
         Enemy1Type = myEnemies[0].Type;
         Enemy2 = myEnemies[1];
         Enemy3 = myEnemies[2];
         Enemy4 = myEnemies[3];
+
+        Debug.Log(myID + " " + BossID + " " + Enemy1Type);
+
+        if (myID == BossID)
+            IsBoss = true;
+
         Initiate();
     }
 

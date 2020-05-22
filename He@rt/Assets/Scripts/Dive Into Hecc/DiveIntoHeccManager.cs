@@ -118,6 +118,7 @@ public class DiveIntoHeccManager : MonoBehaviour
         WaitScreen.SetActive(false);
         LoadBackScreen.SetActive(true);
         LoadIcon.SetActive(true);
+        Time.timeScale = 1f;
         GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("MinigameEnd", "");
     }
 }

@@ -102,7 +102,8 @@ public class EntityCreation : MonoBehaviour
             NPC4SpawnPoint.SetActive(false);
             BossSpawnPoint.SetActive(true);
 
-            enemy1 = NPCCreation(EntityType.BunBun, 4);
+            enemy1 = TraversalManager.Enemy1;
+            //enemy1 = NPCCreation(EntityType.BunBun, 4);
             NPC1SpawnPoint = BossSpawnPoint;
         }
         else

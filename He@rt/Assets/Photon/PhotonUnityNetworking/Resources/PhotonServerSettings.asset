@@ -71,5 +71,7 @@ MonoBehaviour:
   - FailedFlee
   - RPC_StartBattle
   - RPC_StartMinigame
+  - RPC_SetBoosID
+  - RPC_SetBossID
   DisableAutoOpenWizard: 1
   ShowSettings: 1
