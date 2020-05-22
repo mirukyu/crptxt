@@ -43,7 +43,7 @@ public class Aramusha : Player                                                  
 
     List<string> AttackDetails = new List<string>()
     {
-        "Target: Enemy \n Damage: 100 \n Becomes Crippled \n Cripple: 15%",
+        "Target: Enemy \n Damage: 100 \n Becomes Crippled \n Cripple: 10%",
         "Target: Enemy \n Damage: 20 \n\n Damage Buff: +30%",
         "Target: AoE Enemies \n Damage: 25",
         "Target: Enemy \n Damage: 15 \n Target: AoE Enemies \n Appllies Bleed",
@@ -53,10 +53,10 @@ public class Aramusha : Player                                                  
 
     List<int> ManaRequirement = new List<int>()
     {
-        35,
-        20,
+        30,
         15,
-        20,
+        25,
+        10,
         0,
         15
     };
@@ -74,7 +74,7 @@ public class Aramusha : Player                                                  
 
     #region Constructor
     public Aramusha(string username, int entityID)  // Near Death State
-            : base(username, entityID, EntityType.Aramusha, "Aramusha", 50, 100, 25, 0.3f, 6)
+            : base(username, entityID, EntityType.Aramusha, "Aramusha", 60, 115, 25, 0.3f, 6)
     { }
     #endregion
 
@@ -106,7 +106,7 @@ public class Aramusha : Player                                                  
             case 0:
                 Attack(target, 100);
                 IsCrippled = true;
-                CrippledPercentage = 0.15f;            
+                CrippledPercentage = 0.10f;            
                 break;
             case 1:
                 Attack(target, 20);
@@ -169,10 +169,10 @@ public class Priestress : Player                                                
 
     List<string> AttackDetails = new List<string>()
     {
-        "Target: Enemy \n Damage: 25",
-        "Target: Teammate \n Mana: +50 \n\n Spell Boost applicable",
-        "Target: Teammate \n Heal: +15 \n Ailment Clearance \n Spell Boost applicable",
-        "Target: AoE Teammates \n Heal: +35 \n\n Spell Boost applicable",
+        "Target: Enemy \n Damage: 30",
+        "Target: Teammate \n Mana: +60 \n\n Spell Boost applicable",
+        "Target: Teammate \n Heal: +20 \n Ailment Clearance \n Spell Boost applicable",
+        "Target: AoE Teammates \n Heal: +40 \n\n Spell Boost applicable",
         "Target: Teammate \n Revive \n (Target must be KO)",
         "Target: AoE Enemies \n Damage: 50"
     };
@@ -182,7 +182,7 @@ public class Priestress : Player                                                
         10,
         10,
         15,
-        45,
+        40,
         100,
         30
     };
@@ -200,7 +200,7 @@ public class Priestress : Player                                                
 
     #region Constructor
     public Priestress(string username, int entityID)
-            : base(username, entityID, EntityType.Priestess, "Priestess", 75, 200, 15, 0.1f, 6)
+            : base(username, entityID, EntityType.Priestess, "Priestess", 100, 200, 15, 0.1f, 6)
     { spellBoost = 1f; }
     #endregion
 
@@ -230,17 +230,17 @@ public class Priestress : Player                                                
         switch (index)
         {
             case 0:
-                Attack(target, 25);
+                Attack(target, 30);
                 break;
             case 1:
-                target.RegenerateMana((int)(50 * SpellBoost));
+                target.RegenerateMana((int)(60 * SpellBoost));
                 break;
             case 2:
-                target.Heal((int)(15 * SpellBoost));
+                target.Heal((int)(20 * SpellBoost));
                 target.AilmentClearance();
                 break;
             case 3:
-                ApplyAoE("Heal", 35 * SpellBoost);
+                ApplyAoE("Heal", 40 * SpellBoost);
                 break;
             case 4:
                 target.Revive();
@@ -319,7 +319,7 @@ public class Mage : Player                                                      
 
     #region Constructor
     public Mage(string username, int entityID)
-            : base(username, entityID, EntityType.Mage, "Mage", 100, 150, 15, 0f, 6)
+            : base(username, entityID, EntityType.Mage, "Mage", 125, 150, 15, 0f, 6)
     { spellBoost = 1f; }
     #endregion
 
@@ -399,11 +399,11 @@ public class Crusader : Player                                                  
     List<string> AttackDetails = new List<string>()
     {
         "Target: Self \n Increase Dodge Rate: +30%",
-        "Target: AoE Enemies \n 35% Chance to Apply Stun",
+        "Target: AoE Enemies \n 60% Chance to Apply Stun",
         "Target: Enemy \n Applies Blind \n Applies Confused",
-        "Target: AoE Enemies \n Damage: 30 \n\n (Unlock: Team HP < 35%)",
+        "Target: AoE Enemies \n Damage: 50 \n\n (Unlock: Team HP < 35%)",
         "Target: Enemy \n Damage: 20 \n Activates Riposte \n Riposte: 40% \n (Unlock: Team HP < 35%)",
-        "Target: Enemy \n Damage: 60 \n\n (Unlock: Team HP < 35%)"
+        "Target: Enemy \n Damage: 80 \n\n (Unlock: Team HP < 35%)"
     };
 
     List<int> ManaRequirement = new List<int>()
@@ -411,9 +411,9 @@ public class Crusader : Player                                                  
         15,
         30,
         25,
-        20,
         15,
-        25
+        15,
+        20
     };
 
     List<TargetStyle> AttackTargets = new List<TargetStyle>()
@@ -429,7 +429,7 @@ public class Crusader : Player                                                  
 
     #region Constructor 
     public Crusader(string username, int entityID)
-            : base(username, entityID, EntityType.Crusader, "Crusader", 200, 100, 20, 0f, 3)
+            : base(username, entityID, EntityType.Crusader, "Crusader", 250, 150, 20, 0f, 3)
     { }
     #endregion
 
@@ -470,14 +470,14 @@ public class Crusader : Player                                                  
                 DodgeRate += 0.3f;
                 break;
             case 1:
-                ApplyAoE("Stun", 0.5f);
+                ApplyAoE("Stun", 0.6f);
                 break;
             case 2:
                 target.IsConfused = true;
                 target.IsBlinded = true;
                 break;
             case 3:
-                ApplyAoE("Damage", 30);
+                ApplyAoE("Damage", 50);
                 break;
             case 4:
                 IsRiposte = true;
@@ -485,7 +485,7 @@ public class Crusader : Player                                                  
                 Attack(target, 20);
                 break;
             case 5:
-                Attack(target, 60);
+                Attack(target, 80);
                 break;
         }
     }

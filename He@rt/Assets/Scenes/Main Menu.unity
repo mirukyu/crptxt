@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: a594423eb67856b48b2b116ad391543c, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.14847168, g: 0.2569193, b: 0.41992006, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1193,7 +1193,7 @@ MonoBehaviour:
     His traits include being an ikemen, being a bishonen, and being japanese.
 
 
-    HP: 50, Mana: 100, Base Damage: 25, Evade: 30%'
+    HP: 60, Mana: 115, Base Damage: 25, Evade: 30%'
 --- !u!222 &172829462
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1322,6 +1322,73 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 199442087}
+--- !u!1 &208363624
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 208363627}
+  - component: {fileID: 208363626}
+  - component: {fileID: 208363625}
+  m_Layer: 5
+  m_Name: Tutorial Slide (22)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &208363625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 208363624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Texture: {fileID: 2800000, guid: 0541921f27211c143b691a9c8f6f8a7a, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &208363626
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 208363624}
+--- !u!224 &208363627
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 208363624}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.99999964, y: 0.99999964, z: 0.99999964}
+  m_Children: []
+  m_Father: {fileID: 1445559425}
+  m_RootOrder: 25
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 25}
+  m_SizeDelta: {x: 750, y: 400}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &212751078
 GameObject:
   m_ObjectHideFlags: 0
@@ -2405,8 +2472,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Attacks:\n\tInflammation:\r   Deals 15 dmg to all Enemies\n\tFire Squad:\r
-    \     Increases one Ally's Dodge Rate by 15%\n\tBlaze of Glory: 35 dmg to one
+  m_Text: "Attacks:\n\tInflammation:\r   Deals 10 dmg to all Enemies\n\tFire Squad:\r
+    \     Increases one Ally's Dodge Rate by 10%\n\tBlaze of Glory: 20 dmg to one
     Enemy"
 --- !u!222 &679502317
 CanvasRenderer:
@@ -2616,6 +2683,73 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1445559425}
   m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 25}
+  m_SizeDelta: {x: 750, y: 400}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &706427558
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 706427561}
+  - component: {fileID: 706427560}
+  - component: {fileID: 706427559}
+  m_Layer: 5
+  m_Name: Tutorial Slide (21)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &706427559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 706427558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Texture: {fileID: 2800000, guid: b305fa203e172ea4fa4ebea0d7dfe4c2, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &706427560
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 706427558}
+--- !u!224 &706427561
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 706427558}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.99999964, y: 0.99999964, z: 0.99999964}
+  m_Children: []
+  m_Father: {fileID: 1445559425}
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3114,6 +3248,73 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 757030928}
+--- !u!1 &771487726
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 771487729}
+  - component: {fileID: 771487728}
+  - component: {fileID: 771487727}
+  m_Layer: 5
+  m_Name: Tutorial Slide (26)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &771487727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 771487726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Texture: {fileID: 2800000, guid: 5fecc8204ea35974e83fd74bdc78dca7, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &771487728
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 771487726}
+--- !u!224 &771487729
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 771487726}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.9999987, y: 0.9999987, z: 0.9999987}
+  m_Children: []
+  m_Father: {fileID: 1445559425}
+  m_RootOrder: 29
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 24.99997}
+  m_SizeDelta: {x: 750, y: 400}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &811956592
 GameObject:
   m_ObjectHideFlags: 0
@@ -4510,7 +4711,7 @@ MonoBehaviour:
     party to keep her alive. Yet the party relies on her to stay alive. It\u2019s
     this partnership of defend to be healed to defend. Traits include strong party
     skills, from healing, mana regeneration to revicing allies. Though, who said a
-    healer may not deal a lot of damage too?\n\nHP: 75, Mana: 200, Base Damage: 15,
+    healer may not deal a lot of damage too?\n\nHP: 100, Mana: 200, Base Damage: 15,
     Evade: 10%"
 --- !u!222 &1061794269
 CanvasRenderer:
@@ -4735,13 +4936,80 @@ MonoBehaviour:
     Don''t judge a book by its cover. You will fall for its cuteness, and soon enough
     Bun Bun will use its huge teeth to kill you.
 
-    HP: 500, Evade: 5%'
+    HP: 400, Evade: 5%'
 --- !u!222 &1136148342
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1136148339}
+--- !u!1 &1169980750
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1169980753}
+  - component: {fileID: 1169980752}
+  - component: {fileID: 1169980751}
+  m_Layer: 5
+  m_Name: Tutorial Slide (25)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1169980751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1169980750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Texture: {fileID: 2800000, guid: 526582a181087954aafd0e970c651eb8, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &1169980752
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1169980750}
+--- !u!224 &1169980753
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1169980750}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.99999964, y: 0.99999964, z: 0.99999964}
+  m_Children: []
+  m_Father: {fileID: 1445559425}
+  m_RootOrder: 28
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 25}
+  m_SizeDelta: {x: 750, y: 400}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1184038901
 GameObject:
   m_ObjectHideFlags: 0
@@ -4779,6 +5047,73 @@ RectTransform:
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1219891232
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1219891235}
+  - component: {fileID: 1219891234}
+  - component: {fileID: 1219891233}
+  m_Layer: 5
+  m_Name: Tutorial Slide (23)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1219891233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1219891232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Texture: {fileID: 2800000, guid: 1fd22435988bfd0409180e55827ba39a, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &1219891234
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1219891232}
+--- !u!224 &1219891235
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1219891232}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.99999964, y: 0.99999964, z: 0.99999964}
+  m_Children: []
+  m_Father: {fileID: 1445559425}
+  m_RootOrder: 26
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 25}
+  m_SizeDelta: {x: 750, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1227291994
 GameObject:
@@ -4995,6 +5330,73 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1233836394}
+--- !u!1 &1243536242
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1243536245}
+  - component: {fileID: 1243536244}
+  - component: {fileID: 1243536243}
+  m_Layer: 5
+  m_Name: Tutorial Slide (24)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1243536243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1243536242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Texture: {fileID: 2800000, guid: 58a48d53356a6454fa7487b91f9b4b03, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &1243536244
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1243536242}
+--- !u!224 &1243536245
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1243536242}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.99999964, y: 0.99999964, z: 0.99999964}
+  m_Children: []
+  m_Father: {fileID: 1445559425}
+  m_RootOrder: 27
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 25}
+  m_SizeDelta: {x: 750, y: 400}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1251976823
 GameObject:
   m_ObjectHideFlags: 0
@@ -5689,9 +6091,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Attacks:\n\tBlack Swan:\r       25 dmg to one Enemy\n\tSwan Feather:    Regenerates
-    50 Mana of one Ally\n\tWhite Breath:\r     Heals one Ally by 15 - Clears all Ailments\n\tBestow
-    Life:       Heals all Allies by 35\n\tRelish in Grace: Revives a fallen Ally\n\tEXPLOSION:
+  m_Text: "Attacks:\n\tBlack Swan:\r       30 dmg to one Enemy\n\tSwan Feather:    Regenerates
+    60 Mana of one Ally\n\tWhite Breath:\r     Heals one Ally by 20 - Clears all Ailments\n\tBestow
+    Life:       Heals all Allies by 40\n\tRelish in Grace: Revives a fallen Ally\n\tEXPLOSION:
     \    50 dmg to all Enemies"
 --- !u!222 &1365445630
 CanvasRenderer:
@@ -6200,6 +6602,12 @@ MonoBehaviour:
   - {fileID: 1969705298}
   - {fileID: 1895739963}
   - {fileID: 1936993173}
+  - {fileID: 706427558}
+  - {fileID: 208363624}
+  - {fileID: 1219891232}
+  - {fileID: 1243536242}
+  - {fileID: 1169980750}
+  - {fileID: 771487726}
 --- !u!114 &1445559422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6291,6 +6699,12 @@ RectTransform:
   - {fileID: 1969705301}
   - {fileID: 1895739966}
   - {fileID: 1936993176}
+  - {fileID: 706427561}
+  - {fileID: 208363627}
+  - {fileID: 1219891235}
+  - {fileID: 1243536245}
+  - {fileID: 1169980753}
+  - {fileID: 771487729}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6331,8 +6745,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0010529, y: -0.0007019}
-  m_SizeDelta: {x: 1018.4, y: 628.45}
+  m_AnchoredPosition: {x: 0.0042723, y: -0.00072098}
+  m_SizeDelta: {x: 1024.6, y: 624.61}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1455370463
 MonoBehaviour:
@@ -6585,7 +6999,7 @@ MonoBehaviour:
     deal some damage from time to time.\r One shall not underestimated the abilities
     of buffs and debuffs.\nHis personality includes harshly judging a certain other
     character, having evident insomnia, and being a little annoyed at all times.\r\n\nHP:
-    100, Mana: 150, Base Damage: 15"
+    125, Mana: 150, Base Damage: 15"
 --- !u!222 &1468031832
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6791,7 +7205,7 @@ MonoBehaviour:
     Her traits are to apply various ailments on her enemies, to heal herself and get
     back on her enemies.
 
-    HP: 125'
+    HP: 100'
 --- !u!222 &1477484302
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7359,7 +7773,7 @@ MonoBehaviour:
     One fearful trait is his ability to make his allies move quicker, making them
     dodge more attacks.
 
-    HP: 100, Evade: 10%'
+    HP: 75, Evade: 10%'
 --- !u!222 &1592572411
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8385,7 +8799,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "Attacks:\n\tStardust Stream: 100 dmg to one Enemy - Cripples himself by
-    15%\n \tZenshin School:   20 dmg to one Enemy - receives a 30% Damage Buff\n\tWater
+    10%\n \tZenshin School:   20 dmg to one Enemy - receives a 30% Damage Buff\n\tWater
     Flow:         25 dmg to All Enemies\n\tBlood Stained:     15 dmg to one Enemy
     - apllies Bleed to All Enemies\n\tKabe Don:           140% Spell Boost on Priestess
     OR Increasing Dodge Rate by 15 %\n\tStance:                Activates 40% Riposte"
@@ -8468,7 +8882,7 @@ MonoBehaviour:
     than being a punching bag that just does not fucking die. However, the class\u2019
     transformation makes it most likely the most dangerous character in the game.
     Traits include being the last line of defense keeping the party alive, unlocking
-    the last 3 attacks once the party is below 35% HP.\nHP: 200, Mana: 100, Base Damage:
+    the last 3 attacks once the party is below 35% HP.\nHP: 250, Mana: 150, Base Damage:
     20"
 --- !u!222 &1821968222
 CanvasRenderer:
@@ -9052,9 +9466,9 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "Attacks:\n\tFo-getit:         Increases own Dodge Rate by 30%\n\tPillar
-    of Light:\r 35% Chance to Stun - Applied to all Enemies\n\tDepresso:      Apllies
-    Blind and Confused state to one Enemy\n\tHollow:          30 dmg to all Enemies\n\tOathKeeper:\r
-    \ 20 dmg to one Enmey - Activates 40% Riposte for oneself\n\tSanctuary:     60
+    of Light:\r 60% Chance to Stun - Applied to all Enemies\n\tDepresso:      Apllies
+    Blind and Confused state to one Enemy\n\tHollow:          50 dmg to all Enemies\n\tOathKeeper:\r
+    \ 20 dmg to one Enmey - Activates 40% Riposte for oneself\n\tSanctuary:     80
     dmg to one Enemy"
 --- !u!222 &1934082515
 CanvasRenderer:
@@ -9478,9 +9892,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Attacks:\n\tBone Removal:           Rips out the Enemies spine - 10 dmg
-    - Applies Bleed and 10% Cripple\n\tExoskeleton:\r              Enters 20% Riposte
-    state - Heals herself by 25\n\tFasten Your Seatbelt: Stuns one Enemy"
+  m_Text: "Attacks:\n\tBone Removal:           Rips out the Enemies spine - 5 dmg
+    - Applies Bleed and 5% Cripple\n\tExoskeleton:\r              Enters 10% Riposte
+    state - Heals herself by 15\n\tFasten Your Seatbelt: Stuns one Enemy"
 --- !u!222 &1974245514
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9945,8 +10359,8 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "Attacks:\n\tBunny Charm:\r   With its' cuteness Blinds and Confuses one
-    Enemy\n\tBestial Instinct: Channels his enegery, receiving a Damage Buff of 75%\r\n\tHop'n
-    Bite:        Rips out the enemies rip cage, dealing 80 dmg"
+    Enemy\n\tBestial Instinct: Channels his enegery, receiving a Damage Buff of 50%\r\n\tHop'n
+    Bite:        Rips out the enemies rip cage, dealing 50 dmg"
 --- !u!222 &2029966249
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10255,7 +10669,7 @@ MonoBehaviour:
     Making fun of his enemies, (and being a little bit annoying) he always supports
     his own team. He tries his best by applying buffs and debuffs.
 
-    HP: 175'
+    HP: 150, Evade: 15%'
 --- !u!222 &2049323815
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10329,8 +10743,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Attacks:\n\tFlame of Despair: 15 dmg to one Enemy\n\tPumpkin Pump:    Armor
-    Debuff of 30% on one Enemy\n\tSpook Up:            Apllies a Damage Buff of 20%
+  m_Text: "Attacks:\n\tFlame of Despair: 10 dmg to one Enemy\n\tPumpkin Pump:    Armor
+    Debuff of 20% on one Enemy\n\tSpook Up:            Apllies a Damage Buff of 15%
     on his Party"
 --- !u!222 &2071256145
 CanvasRenderer:

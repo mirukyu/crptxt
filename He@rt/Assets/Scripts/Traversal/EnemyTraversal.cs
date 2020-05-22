@@ -39,8 +39,6 @@ public class EnemyTraversal : MonoBehaviour {
         Enemy3 = myEnemies[2];
         Enemy4 = myEnemies[3];
 
-        Debug.Log(myID + " " + BossID + " " + Enemy1Type);
-
         if (myID == BossID)
             IsBoss = true;
 
@@ -93,12 +91,20 @@ public class EnemyTraversal : MonoBehaviour {
         return false;
     }
 
+    /*
     private void OnTriggerEnter(Collider other)
     {
         if (CharacterSetUp.Game.myID == TraversalManager.CurrentPartyLeader && other.gameObject.tag == "Player")
         { GetComponent<PhotonView>().RPC("RPC_StartBattle", RpcTarget.All); }
     }
-   
+    */
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (CharacterSetUp.Game.myID == TraversalManager.CurrentPartyLeader && collision.gameObject.tag == "Player")
+        { GetComponent<PhotonView>().RPC("RPC_StartBattle", RpcTarget.All); }
+    }
+
     [PunRPC]
     private void RPC_StartBattle()
     { GameObject.Find("Manager").GetComponent<TraversalManager>().InitiateCombat(IsBoss, myID); }

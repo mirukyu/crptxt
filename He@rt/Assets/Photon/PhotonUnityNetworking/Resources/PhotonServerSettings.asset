@@ -33,45 +33,41 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
-  - RPC_CreatePlayer
-  - RPC_LoadedGameScene
-  - RPC_UpdateScreen
-  - RPC_SelectShare
-  - RPC_ShareSelect
-  - RPC_ConfirmingCharacter
-  - RPC_Randomizer
-  - RPC_UpdateRandom
-  - RPC_SetSeed
-  - RPC_Test
-  - RPC_ExecuteAttack
-  - RPC_SetAttackRecap
+  - FailedFlee
   - RPC_AddAttack2AttackList
-  - RPC_RemoveAttackRecap
-  - RPC_Reset
-  - RPC_SetAttackRecapSpecial
-  - RPC_VerfiyState
-  - RPC_UpdateNames
-  - RPC_LoseHealth
-  - RPC_Stun
-  - RPC_OverviewUpdate
-  - RPC_SetEnemyTypes
-  - RPC_SetResult
+  - RPC_ApplyResult
+  - RPC_CameraMovement
+  - RPC_ConfirmingCharacter
+  - RPC_CreatePlayer
+  - RPC_ExecuteAttack
+  - RPC_Flee
+  - RPC_LoadBack
+  - RPC_LoadedGameScene
   - RPC_LoadingBack
   - RPC_LoadingIconSet
-  - RPC_ApplyResult
-  - RPC_LoadBack
-  - RPC_SetBossBattle
-  - RPC_SetInfo
-  - RPC_CameraMovement
+  - RPC_LoseHealth
   - RPC_Move
+  - RPC_OverviewUpdate
   - RPC_PlayWalkingSound
+  - RPC_RemoveAttackRecap
+  - RPC_Reset
+  - RPC_SetAttackRecap
+  - RPC_SetAttackRecapSpecial
+  - RPC_SetBossBattle
+  - RPC_SetBossID
   - RPC_SetCurrentLeaderName
+  - RPC_SetEnemyTypes
+  - RPC_SetInfo
   - RPC_SetMinigameRecap
-  - RPC_Flee
-  - FailedFlee
+  - RPC_SetResult
+  - RPC_ShareSelect
   - RPC_StartBattle
   - RPC_StartMinigame
-  - RPC_SetBoosID
-  - RPC_SetBossID
+  - RPC_Stun
+  - RPC_UpdateNames
+  - RPC_UpdateScreen
+  - RPC_VerfiyState
+  - RPC_Jump
+  - RPC_SetEndScreen
   DisableAutoOpenWizard: 1
-  ShowSettings: 1
+  ShowSettings: 0

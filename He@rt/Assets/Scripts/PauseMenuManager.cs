@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PauseMenuManager : MonoBehaviour {
@@ -38,6 +39,8 @@ public class PauseMenuManager : MonoBehaviour {
 
             if (escape_state == false && just_changed_escape_state == false)
             {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
                 escape_state = true;
                 PauseMenu.SetActive(true);
                 just_changed_escape_state = true;
@@ -58,6 +61,11 @@ public class PauseMenuManager : MonoBehaviour {
         PauseMenu.SetActive(false);
         myAudio.clip = Resources.Load<AudioClip>("SFX/PauseMenu/Inventory_Open_01");
         myAudio.Play();
+        if (SceneManager.GetActiveScene().name == "Traversal")
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 
     public void ChangeAudio()

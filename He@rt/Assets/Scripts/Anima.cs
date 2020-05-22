@@ -32,7 +32,7 @@ public class JackOLantern : NPC                                                 
 
     #region Constructor
     public JackOLantern(int entityID)
-            : base(entityID, EntityType.JackOLantern, "Jack-O-Lantern", 175, 10, 0.25f, 3)
+            : base(entityID, EntityType.JackOLantern, "Jack-O-Lantern", 150, 10, 0.15f, 3)
     { }
     #endregion
 
@@ -51,15 +51,15 @@ public class JackOLantern : NPC                                                 
         switch (index)
         {
             case 0:
-                Attack(target, 15);
+                Attack(target, 10);
                 break;
 
             case 1:
-                target.ReceiveArmorBuffDebuff(-0.3f); 
+                target.ReceiveArmorBuffDebuff(-0.2f); 
                 break;
 
             case 2:
-                ApplyAoE("Damage Buff2", 0.2f); 
+                ApplyAoE("Damage Buff2", 0.15f); 
                 break;
         }
     }
@@ -89,7 +89,7 @@ public class Skelly : NPC                                                       
 
     #region Constructor
     public Skelly(int entityID)
-            : base(entityID, EntityType.Skelly, "Skelly", 125, 10, 0f, 3)
+            : base(entityID, EntityType.Skelly, "Skelly", 100, 10, 0f, 3)
     { }
     #endregion
 
@@ -108,16 +108,16 @@ public class Skelly : NPC                                                       
         switch (index)
         {
             case 0:
-                Attack(target, 10);
+                Attack(target, 5);
                 target.IsBleeding = true;
                 target.IsCrippled = true;
-                CrippledPercentage = 0.1f; 
+                CrippledPercentage = 0.05f; 
                 break;
 
             case 1:
                 IsRiposte = true;
-                RipostePercentage = 0.2f; 
-                Heal(25);
+                RipostePercentage = 0.10f; 
+                Heal(15);
                 break; 
 
             case 2:
@@ -208,7 +208,7 @@ public class WispRed : NPC                                                      
 
     #region Constructor
     public WispRed(int entityID)
-            : base(entityID, EntityType.WispRed, "Red Wisp", 100, 10, 0.1f, 3)
+            : base(entityID, EntityType.WispRed, "Red Wisp", 75, 10, 0.1f, 3)
     { }
     #endregion
 
@@ -227,15 +227,15 @@ public class WispRed : NPC                                                      
         switch (index)
         {
             case 0:
-                ApplyAoE("Damage2", 15); 
+                ApplyAoE("Damage2", 10); 
                 break;
 
             case 1:
-                target.DodgeRate += 0.15f; 
+                target.DodgeRate += 0.10f; 
                 break;
 
             case 2:
-                Attack(target, 35);
+                Attack(target, 20);
                 break;
         }
     }
@@ -264,7 +264,7 @@ public class BunBun : NPC                                                       
 
     #region Constructor
     public BunBun(int entityID)
-            : base(entityID, EntityType.BunBun, "Bun Bun", 500, 10, 0.05f, 3) 
+            : base(entityID, EntityType.BunBun, "Bun Bun", 400, 10, 0.05f, 3) 
     { }
     #endregion
 
@@ -288,11 +288,11 @@ public class BunBun : NPC                                                       
                 break;
 
             case 1:
-                ReceiveDamageBuffDebuff(0.75f); 
+                ReceiveDamageBuffDebuff(0.5f); 
                 break;
 
             case 2:
-                Attack(target, 80); 
+                Attack(target, 50); 
                 break;
         }
     }

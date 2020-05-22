@@ -341,8 +341,10 @@ public class Entity
 
     public void HealAndManaRegenFromMinigame(int heal, int mana)
     {
+        Hp += heal;
+
         if (Hp != 0)
-        { Hp += heal; }
+        { IsKo = false; }
 
         if (Hp > MaxHp)
         { Hp = MaxHp; }
@@ -351,6 +353,8 @@ public class Entity
 
         if (Mana > MaxMana)
         { Mana = MaxMana; }
+
+        AilmentClearance();
     }
     #endregion
 }

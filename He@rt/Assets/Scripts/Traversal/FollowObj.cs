@@ -21,9 +21,9 @@ public class FollowObj : MonoBehaviour {
             Vector3 adaptedOffset = offset;
 
             if (Input.GetAxis("Vertical") < 0)
-            { adaptedOffset += new Vector3(0, 0, -1.5f); }
+            { adaptedOffset += new Vector3(0, 0, -2f); }
             if (Input.GetAxis("Horizontal") != 0)
-            { adaptedOffset += new Vector3(0, 0, -0.5f); }
+            { adaptedOffset += new Vector3(0, 0, -0.75f); }
 
             Vector3 campos = target.position + adaptedOffset;
 

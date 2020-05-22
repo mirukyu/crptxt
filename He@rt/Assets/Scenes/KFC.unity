@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 463ccec2a55800a48988a57c95ad7706, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: d0156e9e67a57de4cabf01bc7733f4b1, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -1316,7 +1316,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Kilcker with as fast as you can!!!
+  m_Text: Kilck as fast as you can!!!
 --- !u!222 &1089842711
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -24,6 +24,9 @@ public class AudioManager : MonoBehaviour {
     public void Start()
     { myAudio = GetComponent<AudioSource>(); }
 
+    public void Update()
+    { myAudio.volume = PauseMenuManager.AudioVolume; }
+
     public void PlayRandom() // Plays a random Audio File
     {
         ThemeStyle tmp = (ThemeStyle)Random.Range(0, System.Enum.GetValues(typeof(ThemeStyle)).Length);
@@ -62,7 +65,6 @@ public class AudioManager : MonoBehaviour {
 
     public void PlayTheme(ThemeStyle theme) // Calling the respective theme to play, from there takes a random file
     {
-        myAudio.volume = PauseMenuManager.AudioVolume;
         string path = "";
 
         switch (theme)

@@ -356,12 +356,13 @@ public class Combat : MonoBehaviour {                 // SPELLINDEX 7 IS USED FO
     [PunRPC]
     void FailedFlee(int loserID)
     {
+        EntityList[loserID].IsStunned = true;
+
         if (attacker.EntityID == loserID)
         {
             GetComponent<TextManager>().SetBarrier();
-            PV.RPC("RPC_SetAttackRecapSpecial", RpcTarget.All, attacker.EntityID, "Failed Flee");
+            PV.RPC("RPC_SetAttackRecapSpecial", RpcTarget.All, attacker.EntityID, "Flee Attempt");
             PV.RPC("RPC_AddAttack2AttackList", RpcTarget.MasterClient, attacker.EntityID, 0, 0);
-            attacker.IsStunned = true;
         }
     }
 }

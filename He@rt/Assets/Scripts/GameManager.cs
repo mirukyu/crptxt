@@ -33,7 +33,6 @@ public class GameManager : MonoBehaviour
     public void SuccessfullFleeing()
     {
         PV.RPC("RPC_Flee", RpcTarget.All);
-        Return2Traversal("Lose");
     }
 
     public void Return2Traversal(string result)
@@ -42,12 +41,12 @@ public class GameManager : MonoBehaviour
 
         if (result == "Win" & TraversalManager.BossBattle)
         {
-            EndScreenManager.BeatGame = true;
+            PV.RPC("RPC_SetEndScreen", RpcTarget.All, true);
             StartCoroutine(LoadEndScreen());
         }
         else if (result == "Lose" && GetComponent<EntityCreation>().GetTeamHealthLevel() == 0)
         {
-            EndScreenManager.BeatGame = false;
+            PV.RPC("RPC_SetEndScreen", RpcTarget.All, true);
             StartCoroutine(LoadEndScreen());
         }
         else
@@ -83,5 +82,16 @@ public class GameManager : MonoBehaviour
 
     [PunRPC]
     private void RPC_Flee()
-    { FleeMessage.SetActive(true); TraversalManager.JustFled = true; }
+    {
+        FleeMessage.SetActive(true);
+        TraversalManager.JustFled = true;
+        if (PhotonNetwork.IsMasterClient)
+        { Return2Traversal("Lose"); }
+    }
+
+    [PunRPC]
+    private void RPC_SetEndScreen(bool state)
+    {
+        EndScreenManager.BeatGame = state;
+    }
 }

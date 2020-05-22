@@ -43,7 +43,7 @@ public class TraversalManager : MonoBehaviour {
     public static Entity Enemy3;
     public static Entity Enemy4;
 
-    EntityType[] PossibleEnemyTypes = { EntityType.JackOLantern, EntityType.Skelly, EntityType.WispBlue, EntityType.WispRed };
+    //EntityType[] PossibleEnemyTypes = { EntityType.JackOLantern, EntityType.Skelly, EntityType.WispBlue, EntityType.WispRed };
 
     private static GameObject[] EnemiesList;
     private static List<List<Entity>> EnemiesForEachInstance = new List<List<Entity>>();
@@ -52,14 +52,16 @@ public class TraversalManager : MonoBehaviour {
     private static GameObject[] MiniGameObjectList;
     private static List<bool> MiniGameObjectActivatedList = new List<bool>();
 
-    private static bool Initiated = false;
-
     public void Awake()
     {
+        EnemiesForEachInstance = CharacterSetUp.Game.EnemiesForEachInstance;
+        BossID = CharacterSetUp.Game.BossID;
+
         EnemiesList = GameObject.FindGameObjectsWithTag("Enemy");
         MiniGameObjectList = GameObject.FindGameObjectsWithTag("MiniGame");
         SetIDs();
 
+        /*
         if (PhotonNetwork.IsMasterClient)
         {
             GetComponent<PhotonView>().RPC("RPC_SetBossID", RpcTarget.All, Random.Range(0, EnemiesList.Length));
@@ -67,10 +69,10 @@ public class TraversalManager : MonoBehaviour {
             for (int i = 0; i < EnemiesList.Length; i++)
                 GetComponent<PhotonView>().RPC("RPC_SetEnemyTypes", RpcTarget.All, Random.Range(0, PossibleEnemyTypes.Length), Random.Range(0, PossibleEnemyTypes.Length), 
                     Random.Range(0, PossibleEnemyTypes.Length), Random.Range(0, PossibleEnemyTypes.Length), i);
+        }*/
 
-            for (int i = 0; i < MiniGameObjectList.Length; i++)
-                MiniGameObjectActivatedList.Add(false);
-        }
+        for (int i = 0; i < MiniGameObjectList.Length; i++)
+            MiniGameObjectActivatedList.Add(false);
     }
 
     public void SetIDs()
@@ -95,16 +97,17 @@ public class TraversalManager : MonoBehaviour {
     {
         for (int i = 0; i < MiniGameObjectList.Length; i++)
         {
-            MiniGameObjectList[i].GetComponent<MinigameObject>().SetMyID(i);
-
-            if (MiniGameObjectActivatedList[i] == true)
-                Destroy(MiniGameObjectList[i]);
+            if (MiniGameObjectList[i] != null)
+                MiniGameObjectList[i].GetComponent<MinigameObject>().SetMyStats(i, MiniGameObjectActivatedList[i]);
         }
     }
 
+    /*
     [PunRPC]
     private void RPC_SetEnemyTypes(int type1, int type2, int type3, int type4, int myID)
     {
+        TROUBLESHOOTING.text += "Set Enemy Types\n";
+
         Entity tmpEnemy1;
         Entity tmpEnemy2;
         Entity tmpEnemy3;
@@ -142,13 +145,15 @@ public class TraversalManager : MonoBehaviour {
         Initiated = true;
         BossID = bossid;
     }
+    */
 
     public void Start()
     {
-        Debug.Log(BossID);
         SetEnemies();
         SetMiniGames();
 
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         MoveAllowed = true;
 
         NextPartyLeader();
@@ -317,6 +322,9 @@ public class TraversalManager : MonoBehaviour {
 
     public void InitiateMinigame(int EncounteredMiniGameObjectID)
     {
+        if (MiniGameObjectActivatedList[EncounteredMiniGameObjectID] == true)
+            return;
+
         MiniGameObjectActivatedList[EncounteredMiniGameObjectID] = true;
 
         if (Random.Range(0, 3) == 0)
@@ -333,6 +341,8 @@ public class TraversalManager : MonoBehaviour {
         MoveAllowed = false;
         StartCoroutine(GetComponent<AudioManager>().FadeOut(3f));
         LoadIcon.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     [PunRPC]

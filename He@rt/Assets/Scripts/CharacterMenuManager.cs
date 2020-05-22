@@ -109,37 +109,6 @@ public class CharacterMenuManager : MonoBehaviourPunCallbacks
                     return;
                 }
 
-                switch (inputField.text) // Predefines Names / To Get Access to Asian Characters -- Jokes Only
-                {
-                    case "Alex":
-                        inputField.text = "アレックス";
-                        break;
-                    case "Yahiko":
-                        inputField.text = "やひこ";
-                        break;
-                    case "Shachou":
-                        inputField.text = "社長";
-                        break;
-                    case "Kim Hyeon U":
-                        inputField.text = "김현우";
-                        break;
-
-                    case "Grace":
-                        inputField.text = "하얀 백조";
-                        break;
-                    case "Jiyoung":
-                        inputField.text = "지영아";
-                        break;
-
-                    case "Karim":
-                        inputField.text = "Karim-ちゃん";
-                        break;
-
-                    case "Motaz":
-                        inputField.text = "Motta :)";
-                        break;
-                }
-
                 if (inputField.text != "" && inputField.text.Length <= 16 && tmpCharacter != EntityType.DEFAULT) // actual important part
                 {
                     //TextField.text = "Please choose your nickname and character. Choose wisely as it can't be changed later."; // Basis

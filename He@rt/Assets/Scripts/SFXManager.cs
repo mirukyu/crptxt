@@ -34,6 +34,9 @@ public class SFXManager : MonoBehaviour
         KFC = Resources.LoadAll("SFX/KFC", typeof(AudioClip));
     }
 
+    public void Update()
+    { myAudio.volume = PauseMenuManager.AudioVolume; }
+
     public void PlaySFX(string sound_name, string FolderName)
     {
         myAudio.clip = null;
