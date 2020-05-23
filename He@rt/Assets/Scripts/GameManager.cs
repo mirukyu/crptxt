@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
         }
         else if (result == "Lose" && GetComponent<EntityCreation>().GetTeamHealthLevel() == 0)
         {
-            PV.RPC("RPC_SetEndScreen", RpcTarget.All, true);
+            PV.RPC("RPC_SetEndScreen", RpcTarget.All, false);
             StartCoroutine(LoadEndScreen());
         }
         else

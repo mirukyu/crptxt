@@ -751,10 +751,10 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "<i>The Dev Team ~ Red Spider Lily:</i>\n<color=#00fa9a>Alexandre Caspers</color>\n\tGroup
-    Leader, Main Programmer, Audio, SFX, UI\n\n<color=#dc143c>Grace Jiyoung Yun</color>\n\tMain
-    Artist, Artwork, Assets, Models, UI\n\n<color=#ff33cc>Karim Abou Dargham</color>\n\tMain
-    Designer, Minigames, Lore, Tutorial\n\n<color=#7df9ff>Motaz Aljamal</color>\n\tMain
-    Documentation, Programmer, Map Generation\n\n"
+    Leader, Main Programmer, Audio, SFX, UI, \n\tMultiplayer\n\n<color=#dc143c>Grace
+    Jiyoung Yun</color>\n\tMain Artist, Artwork, Assets, Models, UI\n\n<color=#ff33cc>Karim
+    Abou Dargham</color>\n\tMain Designer, Minigames, Lore, Tutorial, Icons\n\n<color=#7df9ff>Motaz
+    Aljamal</color>\n\tMain Documentation, Programmer, Map Generation, \n\tLogo\n\n"
 --- !u!222 &850648181
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -54,6 +54,7 @@ GameObject:
   - component: {fileID: 114704870336495614}
   - component: {fileID: 114440201853128986}
   - component: {fileID: 136771322075027766}
+  - component: {fileID: 114690688589863788}
   m_Layer: 0
   m_Name: Avatar
   m_TagString: Player
@@ -166,7 +167,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1206593009169368}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
   m_Name: 
@@ -174,6 +175,17 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
+--- !u!114 &114690688589863788
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1206593009169368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05a53c4594655e244a47ae3b7c418a18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114704870336495614
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -189,9 +201,9 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   ObservedComponents:
-  - {fileID: 0}
+  - {fileID: 114440201853128986}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

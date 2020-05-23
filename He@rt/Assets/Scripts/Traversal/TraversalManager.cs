@@ -156,7 +156,13 @@ public class TraversalManager : MonoBehaviour {
         Cursor.visible = false;
         MoveAllowed = true;
 
+        PV = GetComponent<PhotonView>();
+
         NextPartyLeader();
+
+        if (CharacterSetUp.Game.myID == CurrentPartyLeader)
+        { Avatar.GetComponent<OwnerShipTransfer>().ChangeOwner(); }
+
         EntityType PartyLeaderType = EntityList[CurrentPartyLeader].Type;
 
         switch (PartyLeaderType)
@@ -185,8 +191,6 @@ public class TraversalManager : MonoBehaviour {
         Avatar.transform.rotation = LastRotation;
 
         StartCoroutine(PlayAudio());
-
-        PV = GetComponent<PhotonView>();
 
         LoadIcon.SetActive(false);
         BossBattleImage.SetActive(false);

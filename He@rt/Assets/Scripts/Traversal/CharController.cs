@@ -20,7 +20,6 @@ public class CharController : MonoBehaviour
     void Start()
     {
         PV = GetComponent<PhotonView>();
-        PV.TransferOwnership(TraversalManager.CurrentPartyLeader);
 
         controller = GetComponent<CharacterController>();
 
@@ -34,7 +33,10 @@ public class CharController : MonoBehaviour
     void Update()
     {
         if (TraversalManager.MoveAllowed && CharacterSetUp.Game.myID == TraversalManager.CurrentPartyLeader)
+        //if (TraversalManager.MoveAllowed && PV.IsMine)
         {
+            //PV = PhotonView.Get(GetComponent<PhotonView>());
+
             if (Input.GetKey(KeyCode.LeftShift))
                 moveSpeed = 1.5f * initialMoveSpeed;
             else
@@ -66,9 +68,12 @@ public class CharController : MonoBehaviour
         else // controller.isGrounded == false
             direction.y += gravity * initialMoveSpeed * Time.deltaTime;
 
-        PV.RPC("RPC_Move", RpcTarget.All, heading, direction);
+        //
+        if (heading != Vector3.zero)
+            transform.forward = heading;
+        controller.Move(direction * Time.deltaTime);
+        //PV.RPC("RPC_Move", RpcTarget.All, heading, direction);
     }
-
 
     /// RPC
 

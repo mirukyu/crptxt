@@ -17,7 +17,7 @@ public class RoomController : MonoBehaviourPunCallbacks, IInRoomCallbacks
     public int currentScene;
 
     //Player Info
-    Photon.Realtime.Player[] playerList;
+    public Photon.Realtime.Player[] playerList;
     public int playersInRoom;
     public int myNumberInRoom;
 
