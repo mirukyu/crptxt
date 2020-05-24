@@ -111,7 +111,7 @@ public class Skelly : NPC                                                       
                 Attack(target, 5);
                 target.IsBleeding = true;
                 target.IsCrippled = true;
-                CrippledPercentage = 0.05f; 
+                target.CrippledPercentage = 0.05f; 
                 break;
 
             case 1:
@@ -231,7 +231,7 @@ public class WispRed : NPC                                                      
                 break;
 
             case 1:
-                target.DodgeRate += 0.10f; 
+                target.DodgeRate = target.BaseDodgeRate + 0.10f; 
                 break;
 
             case 2:

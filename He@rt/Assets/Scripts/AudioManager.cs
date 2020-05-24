@@ -114,7 +114,8 @@ public class AudioManager : MonoBehaviour {
                 path = "Traversal/Town";
                 break;
             case ThemeStyle.Traversal:
-                List<ThemeStyle> TraversalList = new List<ThemeStyle> { ThemeStyle.TraversalCastle, ThemeStyle.TraversalCave, ThemeStyle.TraversalFields, ThemeStyle.TraversalTown };
+                List<ThemeStyle> TraversalList = new List<ThemeStyle> { ThemeStyle.TraversalCastle, ThemeStyle.TraversalCave, ThemeStyle.TraversalFields,
+                    ThemeStyle.TraversalTown, ThemeStyle.Suspense, ThemeStyle.EventMystic, ThemeStyle.EventNegative, ThemeStyle.EventPositive };
                 PlayTheme(TraversalList[Random.Range(0,TraversalList.Count)]);
                 return;
             case ThemeStyle.Unique:

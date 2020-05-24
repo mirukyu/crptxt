@@ -73,7 +73,7 @@ public class Aramusha : Player                                                  
     #endregion
 
     #region Constructor
-    public Aramusha(string username, int entityID)  // Near Death State
+    public Aramusha(string username, int entityID)
             : base(username, entityID, EntityType.Aramusha, "Aramusha", 60, 115, 25, 0.3f, 6)
     { }
     #endregion
@@ -123,11 +123,11 @@ public class Aramusha : Player                                                  
                 if (target is Priestress)
                 { ((Priestress)target).SpellBoost = 1.4f; }
                 else
-                { DodgeRate += 0.15f; }
+                { DodgeRate = BaseDodgeRate + 0.15f; }
                 break;
             case 5:
-                target.IsRiposte = true;
-                target.RipostePercentage = 0.4f;
+                IsRiposte = true;
+                RipostePercentage = 0.4f;
                 break;
         }
     }
@@ -467,7 +467,7 @@ public class Crusader : Player                                                  
         switch (index)
         {
             case 0:
-                DodgeRate += 0.3f;
+                DodgeRate = 0.3f;
                 break;
             case 1:
                 ApplyAoE("Stun", 0.6f);
@@ -481,7 +481,7 @@ public class Crusader : Player                                                  
                 break;
             case 4:
                 IsRiposte = true;
-                RipostePercentage += 0.35f;
+                RipostePercentage = 0.35f;
                 Attack(target, 20);
                 break;
             case 5:

@@ -29,6 +29,7 @@ public class Entity
     private bool isKo;
 
     private float dodgeRate;
+    private float baseDodgeRate;
     private float damageBuffDebuff;
     private float armorBuffDebuff;
     private float ripostePercentage;
@@ -85,6 +86,11 @@ public class Entity
     {
         get { return dodgeRate; }
         set { dodgeRate = value; }
+    }
+    public float BaseDodgeRate
+    {
+        get { return baseDodgeRate; }
+        set { baseDodgeRate = value; }
     }
     public float DamageBuffDebuff
     {
@@ -156,6 +162,7 @@ public class Entity
         this.mana = mana;
         this.baseStrength = baseStrength;
         this.dodgeRate = dodgeRate;
+        this.baseDodgeRate = dodgeRate;
 
         maxHp = hp;
         maxMana = mana;
@@ -251,20 +258,12 @@ public class Entity
 
     public void ReceiveDamageBuffDebuff (float damageBuffDebuffValue) // Managing Damage Buffs and Debuffs
     {
-        damageBuffDebuff += damageBuffDebuffValue;
-        if (damageBuffDebuff > 1f)
-        { damageBuffDebuff = 1f; }
-        if (damageBuffDebuff < -1f)
-        { damageBuffDebuff = -1f; }
+        damageBuffDebuff = damageBuffDebuffValue;
     }
 
     public void ReceiveArmorBuffDebuff(float armorBuffDebuffValue) // Managing Armor Buffs and Debuffs
     {
-        armorBuffDebuff += armorBuffDebuffValue;
-        if (armorBuffDebuff > 1f)
-        { armorBuffDebuff = 1f; }
-        if (armorBuffDebuff < -1f)
-        { armorBuffDebuff = -1f; }
+        armorBuffDebuff  = armorBuffDebuffValue;
     }
 
     public void AilmentClearance() // Clears all ailments statusses excpet Riposte
@@ -343,7 +342,7 @@ public class Entity
     {
         Hp += heal;
 
-        if (Hp != 0)
+        if (Hp > 0)
         { IsKo = false; }
 
         if (Hp > MaxHp)
