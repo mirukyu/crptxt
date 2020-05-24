@@ -240,6 +240,7 @@ public class CharacterMenuManager : MonoBehaviourPunCallbacks
     {
         switch (character)
         {
+            /*
             case EntityType.Aramusha:
                 return "Models/Persona/Aramusha";
             case EntityType.Priestess:
@@ -248,6 +249,15 @@ public class CharacterMenuManager : MonoBehaviourPunCallbacks
                 return "Models/Persona/Mage";
             case EntityType.Crusader:
                 return "Models/Persona/Crusader";
+                */
+            case EntityType.Aramusha:
+                return "Models/TEST/Aramusha";
+            case EntityType.Priestess:
+                return "Models/TEST/Priestess";
+            case EntityType.Mage:
+                return "Models/TEST/Mage";
+            case EntityType.Crusader:
+                return "Models/TEST/Crusader";
         }
 
         return "";

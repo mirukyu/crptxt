@@ -536,10 +536,21 @@ public class EntityCreation : MonoBehaviour
         MeshRenderer[] BodyParts = ModelToAffect.GetComponentsInChildren<MeshRenderer>();
         List<Color> BodyPartsInitialColour = new List<Color>() { };
 
-        foreach (MeshRenderer smr in BodyParts)
+        SkinnedMeshRenderer[] BodyParts2 = ModelToAffect.GetComponentsInChildren<SkinnedMeshRenderer>();
+        List<Color> BodyPartsInitialColour2 = new List<Color>() { };
+
+        foreach (MeshRenderer mr in BodyParts)
         {
-            BodyPartsInitialColour.Add(smr.material.color);
-            smr.material.color = red;
+            BodyPartsInitialColour.Add(mr.material.color);
+            mr.material.color = red;
+        }
+
+        foreach (SkinnedMeshRenderer smr in BodyParts2)
+        {
+            BodyPartsInitialColour2.Add(smr.materials[0].color);
+            BodyPartsInitialColour2.Add(smr.materials[1].color);
+            smr.materials[0].color = red;
+            smr.materials[1].color = red;
         }
 
         yield return new WaitForSeconds(1f);
@@ -547,6 +558,12 @@ public class EntityCreation : MonoBehaviour
         for (int i = 0; i < BodyParts.Length; i++)
         {
             BodyParts[i].material.color = BodyPartsInitialColour[i];
+        }
+
+        for (int i = 0; i < BodyParts2.Length; i++)
+        {
+            BodyParts2[i].materials[0].color = BodyPartsInitialColour2[2*i];
+            BodyParts2[i].materials[1].color = BodyPartsInitialColour2[2*i+1];
         }
     }
 
