@@ -24,11 +24,11 @@ just download or clone using
 for a compiled version go to 
 ```https://github.com/mirukyu/crptxt.git```
 
-```
-until finished
-```
+and download the installer 
 
-End with an example of getting some data out of the system or using it for a little demo
+### Uninstalling
+
+Go to the file path directory where you installed the game and run the uninstaller.
 
 ## Built With
 
